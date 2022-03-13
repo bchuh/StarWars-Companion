@@ -19,7 +19,7 @@ private:
 class Camera
 {
 public:
-	static Camera* getInstance(int magnify=20); 
+	static Camera* getInstance(int magnify=20);//magnify means zoom in the camera 
 	CircularVector* getCamList();
 	cv::Mat& nextFrame();
 	void nextCamera();

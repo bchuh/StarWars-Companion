@@ -2,27 +2,6 @@
 #include "camera_module.h"
 
 Camera* Camera::instance = NULL;
-/*
-int main()
-{
-	//读取视频或摄像头
-	VideoCapture capture(0);
-
-	while (true)
-	{
-		Mat frame;
-		capture >> frame;
-		imshow("读取视频", frame);
-		if (waitKey(1) != -1)
-		{
-			capture.release();
-			std::cout << "finished by user\n";
-			break;
-		}
-	}
-	return 0;
-}
-*/
 
 CircularVector::CircularVector(vector<int>*vector)
 {
