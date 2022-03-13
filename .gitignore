@@ -348,3 +348,14 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/Camera_module/Camera module.vcxproj.filters
+/Camera_module/Camera module.vcxproj
+/Camera_module/Camera module.sln
+/SW companion.vcxproj.filters
+/SW companion.vcxproj
+/SW companion.sln
+/end2end.onnx
+/classify_test.cpp
+/2.png
+/1.jpg
+/Camera_module/源.cpp
