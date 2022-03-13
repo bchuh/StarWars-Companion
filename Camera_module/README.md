@@ -1,6 +1,8 @@
 ## Usage example用法示范
 ```
 	Camera* cam=Camera::getInstance();
+	if (cam->getCamNum() <= 0)
+		cout<<"No camera detected!"<<endl;
 	while (true)
 	{
 		auto frame = cam->nextFrame();
