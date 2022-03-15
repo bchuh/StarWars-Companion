@@ -1,6 +1,6 @@
 ## Usage Example
 ```
- 	auto cam=Camera::getInstance();
+ 	auto cam = Camera::getInstance();
 	auto model = DLmodule::getInstance();
 	int result;
 	while (true)
