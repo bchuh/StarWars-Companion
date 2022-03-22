@@ -22,11 +22,11 @@ int Classifier::classify(cv::Mat inputFrame)
 	return classId;
 }
 
-Classifier* Classifier::getInstance()
+Classifier* Classifier::getInstance(string onnx_path)
 {
 	if (Classifier::instance == nullptr)
 	{
-		Classifier::instance = new Classifier;
+		Classifier::instance = new Classifier(onnx_path);
 	}
 	return Classifier::instance;
 }
@@ -42,9 +42,9 @@ void Classifier::Destroy()
 	Classifier::instance = nullptr;
 }
 
-Classifier::Classifier()
+Classifier::Classifier(string onnx_path)
 {
-	String bin_model = "DL_module\\mobilenet.onnx";
+	String bin_model = onnx_path;
 	if (!fileExist(bin_model)) {
 		int temp;
 		this->_isReady = false;
@@ -103,11 +103,11 @@ void Classifier::preProcess(const cv::Mat& image, cv::Mat& image_blob)
 	outt.copyTo(image_blob);
 }
 
-DLmodule* DLmodule::getInstance()
+DLmodule* DLmodule::getInstance(string model_path)
 {
 	if (DLmodule::instance == nullptr)
 	{
-		DLmodule::instance = new DLmodule();
+		DLmodule::instance = new DLmodule(model_path);
 	}
 	return DLmodule::instance;
 }
@@ -128,9 +128,10 @@ bool DLmodule::isReady()
 	return classifier->isReady();
 }
 
-DLmodule::DLmodule()
+DLmodule::DLmodule(string model_path)
 {
-	this->classifier = Classifier::getInstance();
+	String path = model_path + "\\mobilenet,onnx";
+	this->classifier = Classifier::getInstance(path);
 }
 
 DLmodule::~DLmodule()
