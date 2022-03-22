@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QTime>
+#include <QScreen>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -22,10 +23,13 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::run(){
     cv::Mat image;
     QTime dieTime;
+    auto size=ui->graphicsView->size();
+    QScreen *screen=QGuiApplication::primaryScreen ();
+    auto dpi = screen->devicePixelRatio();
     while(true)
     {
         image=cam->nextFrame();
-        //cv::resize(image,image,cv::Size(image.cols/4*4,image.rows/4*4));
+        cv::resize(image,image,cv::Size(size.width()*dpi,size.height()*dpi));
         //场景
 
         //控件绑定场景
@@ -36,9 +40,9 @@ void MainWindow::run(){
         QImage  img2(image.data,image.cols,image.rows, image.step, QImage::Format_RGB888);
         //m_imageItem->setPixmap(QPixmap::fromImage(QImage((const unsigned char*)image.data, image.cols, image.rows, QImage::Format::Format_RGB888)));
         m_imageItem->setPixmap(QPixmap::fromImage(img2));
-        dieTime=QTime::currentTime().addMSecs(80);
+        dieTime=QTime::currentTime().addMSecs(20);
                 while(QTime::currentTime()<dieTime)
-                    QCoreApplication::processEvents(QEventLoop::AllEvents,80);
+                    QCoreApplication::processEvents(QEventLoop::AllEvents,20);
         //update();
     }
 }
