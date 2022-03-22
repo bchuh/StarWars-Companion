@@ -130,7 +130,7 @@ bool DLmodule::isReady()
 
 DLmodule::DLmodule(string model_path)
 {
-	String path = model_path + "\\mobilenet,onnx";
+	String path = model_path + "\\mobilenet.onnx";
 	this->classifier = Classifier::getInstance(path);
 }
 

@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QTime>
 #include <QScreen>
+#include <QDebug>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -18,6 +19,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setScene(m_scene);
     ui->graphicsView->show();
     this->cam=Camera::getInstance();
+    auto model=DLmodule::getInstance("C:\\Users\\zhuze\\OneDrive - Macau University of Science and Technology\\Bill\\3th-2\\Software_proj_manage\\StarWars-Companion\\DL_module");
+    qDebug()<<model->isReady();
 
 }
 void MainWindow::run(){
