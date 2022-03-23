@@ -21,7 +21,7 @@ class Camera
 public:
 	static Camera* getInstance(int magnify=20);//magnify means zoom in the camera 
 	CircularVector* getCamList();
-    cv::Mat& nextFrame(int width=-1, int height=-1);
+    cv::Mat& nextFrame(int width=-1, int height=-1);//provide crop configuration
 	void nextCamera();
 	int getCamNum();
 	static void Destory();
