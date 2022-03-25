@@ -4,6 +4,7 @@
 #include <QScreen>
 #include <QString>
 
+
 std::vector<string> names{ "Admiral Ackbar", "Admiral Piett", "Anakin Skywalker", "Bail Organa", "BB-8", "Bib Fortuna", "Boba Fett", "Bodhi Rook", "C-3PO", "Captain Phasma", "Cassian Andor", "Chewbacca", "Dark Sidious", "Darth Maul", "Darth Vader", "Finn (FN-2187)", "General Grievous", "General Hux", "Grand Moff Tarkin", "Greedo", "Han Solo", "Jabba the Hutt", "Jango Fett", "Jar Jar Binks", "Jyn Erso", "K-2SO", "Kenobi", "Kylo Ren", "Lando Calrissian", "Luke Skywalker", "Mace Windu", "Maz Kanata", "Nien Nunb", "Obi-Wan", "Orson Krennic", "Padmé Amidala", "Poe Dameron", "Princess Leia Organa", "Qi'ra", "Qui-Gon Jinn", "R2-D2", "Rey", "Rose Tico", "Saw Gerrera", "Supreme Leader Snoke", "Tobias Beckett", "Vice-Admiral Holdo", "Watto", "Wedge Antilles", "Wicket W. Warrick", "Yoda" };
 
 MainWindow::MainWindow(QWidget* parent)
@@ -12,7 +13,7 @@ MainWindow::MainWindow(QWidget* parent)
 {
     ui->setupUi(this);
     stop = -1;
-    connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(on_pushButton_clicked()));
+    connect(ui->pushButton, SIGNAL(pressed()), this, SLOT(on_pushButton_clicked()));
     connect(ui->pushButton_2, SIGNAL(clicked(bool)), this, SLOT(on_pushButton_2_clicked()));
     QGraphicsScene* m_scene;
     //画布
@@ -74,6 +75,6 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_pushButton_clicked()
 {
-    subwidget w;
-    w.show();
+    q = new subwidget((QWidget*)this);
+    q->show();
 }
