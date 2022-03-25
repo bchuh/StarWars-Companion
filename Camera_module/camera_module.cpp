@@ -61,11 +61,24 @@ CircularVector* Camera::getCamList()
 	return this->CamList;
 }
 
-cv::Mat& Camera::nextFrame()
+cv::Mat& Camera::nextFrame(int width, int height)
 {
 	this->cap >> this->frame;
-	int newW = floor(this->frame.cols * ((100 - this->magnify) * 0.01));
-	int newH = floor(this->frame.rows * ((100 - this->magnify) * 0.01));
+    int newW,newH;
+    if (width!=-1 && height!=-1){
+        float old_ratio=frame.cols*1.0/(frame.rows);
+        float new_ratio=1.0*width/height;
+        if (new_ratio>=old_ratio){
+            newW = floor(this->frame.cols * ((100 - this->magnify) * 0.01));
+            newH = floor(this->frame.cols/new_ratio * ((100 - this->magnify) * 0.01));
+        }else{
+            newW = floor(this->frame.rows*new_ratio * ((100 - this->magnify) * 0.01));
+            newH = floor(this->frame.rows * ((100 - this->magnify) * 0.01));
+        }
+    }else{
+        newW = floor(this->frame.cols * ((100 - this->magnify) * 0.01));
+        newH = floor(this->frame.rows * ((100 - this->magnify) * 0.01));
+    }
 	int offsetW = (this->frame.cols - newW) / 2;
 	int offsetH = (this->frame.rows - newH) / 2;
 	cv::Rect roi(offsetW, offsetH, newW, newH);
