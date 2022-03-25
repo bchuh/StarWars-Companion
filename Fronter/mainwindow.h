@@ -4,9 +4,14 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QGraphicsItem>
+#include <vector>
+#include <string>
 #include <opencv2\opencv.hpp>
-#include "C:\Users\zhuze\OneDrive - Macau University of Science and Technology\Bill\3th-2\Software_proj_manage\StarWars-Companion\Camera_module\camera_module.h"
-#include "C:\Users\zhuze\OneDrive - Macau University of Science and Technology\Bill\3th-2\Software_proj_manage\StarWars-Companion\DL_module\DL_module.h"
+#include <opencv2/imgproc.hpp>
+#include "C:\\Users\\YRY\\Desktop\\StarWars-Companion-dev\\subwidget\\subwidget.h" //需要更改绝对路径
+#include "../Camera_module/camera_module.h"
+#include "../DL_module/DL_module.h"
+
 //连接cam模块步骤：1.项目右键, add existing directory, 选摄像头模块的文件夹
 //2. 把上面的include路径改为你电脑上的camera_module.h的绝对路径
 
@@ -22,13 +27,21 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
     void run();
 
+private slots:
+    void on_pushButton_2_clicked();
+
 private:
-    Ui::MainWindow *ui;
-    QGraphicsPixmapItem * m_imageItem;
-    Camera*cam;
+    Ui::MainWindow* ui;
+    QGraphicsPixmapItem* m_imageItem;
+    Camera* cam;
+    DLmodule* model;
+    int result;
+    int stop;
 };
+
+
 #endif // MAINWINDOW_H
