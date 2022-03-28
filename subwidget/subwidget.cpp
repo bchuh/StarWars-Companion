@@ -57,7 +57,7 @@ subwidget::subwidget(QWidget *parent, string db_path)
     auto temp=dbModule->openDB(const_cast<char*>(path));
     if(temp==false)
         exit(0);
-    cout<<dbModule->nameQuery(15)<<endl;
+    cout<<dbModule->nameQuery(2)<<endl;
 
 
 
