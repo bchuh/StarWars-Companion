@@ -8,9 +8,9 @@
 #include <string>
 #include <opencv2\opencv.hpp>
 #include <opencv2/imgproc.hpp>
+#include "../subwidget/subwidget.h"
 #include "../Camera_module/camera_module.h"
 #include "../DL_module/DL_module.h"
-#include "subwidget/subwidget.h"
 
 //连接cam模块步骤：1.项目右键, add existing directory, 选摄像头模块的文件夹
 //2. 把上面的include路径改为你电脑上的camera_module.h的绝对路径
@@ -32,15 +32,15 @@ public:
     void run();
 
 private slots:
-    void on_pushButton_2_clicked();
     void on_pushButton_clicked();
+    void on_pushButton_2_clicked();
 
 private:
     Ui::MainWindow* ui;
-    subwidget* q;
     QGraphicsPixmapItem* m_imageItem;
     Camera* cam;
     DLmodule* model;
+    subwidget*subWindow;
     int result;
     int stop;
 };

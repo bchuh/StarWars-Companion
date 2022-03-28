@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-#include "subwidget.h"
+
 #include <QScreen>
 #include <QApplication>
 
