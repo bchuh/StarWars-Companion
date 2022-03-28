@@ -18,8 +18,6 @@ char* SQLiteHelper::nameQuery(int ID) {
 	int c;      //���ر�����
 	int rc;     //���������Ƿ�ɹ�
 
-    if(ID>5)
-        return nullptr;
 
 	string condition = " id = ";
 	string sid = to_string(ID);    //int id ת��Ϊ�ַ�������
