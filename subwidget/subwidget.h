@@ -7,7 +7,7 @@
 #include <QDebug>
 #include <QTime>
 #include <QTimer>
-#include "SQLiteHelper.h"
+#include "../Database/SQLiteHelper.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class subwidget; }

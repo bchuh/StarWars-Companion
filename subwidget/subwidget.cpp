@@ -54,7 +54,10 @@ subwidget::subwidget(QWidget *parent, string db_path)
     dbModule=(SQLiteHelper*)new SQLiteHelper();
 
     const char* path=db_path.c_str();
-    dbModule->openDB(const_cast<char*>(path));
+    auto temp=dbModule->openDB(const_cast<char*>(path));
+    if(temp==false)
+        exit(0);
+    cout<<dbModule->nameQuery(15)<<endl;
 
 
 
@@ -62,9 +65,17 @@ subwidget::subwidget(QWidget *parent, string db_path)
 
 void subwidget::setID(int id)
 {
+   cout<<"subwidget:"<<endl;
+   //cout<<dbModule->nameQuery(3);
+   //this->setInfo(id, 0, "aa", "N/A");
+
    char* temp_name=dbModule->nameQuery(id);
+   string name=temp_name;
+   //cout<<dbModule->nameQuery(id);
    if(temp_name != nullptr){
-          this->setInfo(id, 0, temp_name, "N/A"); //目前只支持名字
+          this->setInfo(id, 0, QString::fromStdString(name), "N/A"); //目前只支持名字
+   }else{
+       cout<<"Error:nameQuery return NULL!"<<endl;
    }
 
 }
@@ -75,8 +86,8 @@ void subwidget::setInfo(int ID,int Age,QString Name, QString Intro)
     //初始化人物
     P.ID = ID;
     P.Age = Age;
-    P.Intro = Name;
-    P.Name = Intro;
+    P.Intro = Intro;
+    P.Name = Name;
     ui->lineEdit->setText(QString::number(P.ID));
     ui->lineEdit_2->setText(P.Name);
     ui->lineEdit_3->setText(QString::number(P.Age));
@@ -125,7 +136,9 @@ void subwidget::on_Next_clicked()
 void subwidget::on_Back_clicked()
 {
     //返回上一级界面
-
+    hide();
+    emit mySignal();
+/*
     //演示 当上级跳转传入值 设置文本刷新界面
     P.ID = 1;
     P.Age = 2;
@@ -150,6 +163,7 @@ void subwidget::on_Back_clicked()
         }
         emit mySignal();
     }
+    */
 }
 
 
@@ -179,7 +193,7 @@ void subwidget::paintEvent(QPaintEvent *)
     rect2.translate(ui->frame_2->pos());
     rect3.translate(ui->frame_3->pos());
 
-    qDebug()<<"2"<<rect1;
+    //qDebug()<<"2"<<rect1;
     //构建图形
     //获得路径
     //P.ID = 1;
