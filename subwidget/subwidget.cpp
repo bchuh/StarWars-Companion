@@ -70,13 +70,14 @@ void subwidget::setID(int id)
    //this->setInfo(id, 0, "aa", "N/A");
 
    char* temp_name=dbModule->nameQuery(id);
+   if(temp_name == nullptr){
+        cout<<"Error:nameQuery return NULL!"<<endl;
+        return;
+   }
+
    string name=temp_name;
    //cout<<dbModule->nameQuery(id);
-   if(temp_name != nullptr){
-          this->setInfo(id, 0, QString::fromStdString(name), "N/A"); //目前只支持名字
-   }else{
-       cout<<"Error:nameQuery return NULL!"<<endl;
-   }
+   this->setInfo(id, 0, QString::fromStdString(name), "N/A"); //目前只支持名字
 
 }
 void subwidget::setInfo(int ID,int Age,QString Name, QString Intro)
