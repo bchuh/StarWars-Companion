@@ -25,7 +25,7 @@ char* SQLiteHelper::nameQuery(int ID) {
 	if (rc == SQLITE_OK)
 		return result[1];
 	else 
-		return "sqlite_wrong";
+        return nullptr;
 }
 
 /*char* infoQuery(int ID) {
@@ -36,15 +36,17 @@ char* picQuery(int ID) {
 }
 */
 
-void SQLiteHelper::openDB(char* path)
+bool SQLiteHelper::openDB(char* path)
 {
+    cout<<path;
 	int last = sqlite3_open(path, &db);
 	if (SQLITE_OK != last)
 	{
 		cout << "Fail to open db" << endl;
-		return;
+        return false;
 		PostQuitMessage(0);
-	}
+    }else
+        return true;
 }
 
 void SQLiteHelper::closeDB()

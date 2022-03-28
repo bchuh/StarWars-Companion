@@ -23,7 +23,9 @@ MainWindow::MainWindow(QWidget* parent)
     ui->graphicsView->setScene(m_scene);
     ui->graphicsView->show();
     this->cam = Camera::getInstance();
-    this->model = DLmodule::getInstance("./DL_module");
+    this->model = DLmodule::getInstance("C:\\Users\\zhuze\\Downloads\\StarWars-Companion-dev\\StarWars-Companion-dev\\DL_module");
+    this->subWindow=new subwidget(this, "C:\\Users\\zhuze\\Downloads\\StarWars-Companion-dev\\StarWars-Companion-dev\\Database\\star_war.db");
+    subWindow->hide();
 
 }
 void MainWindow::run() {
@@ -74,6 +76,6 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_pushButton_clicked()
 {
-    subwidget w;
-    w.show();
+    subWindow->setID(this->result);
+    subWindow->show();
 }

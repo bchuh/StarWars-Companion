@@ -8,7 +8,7 @@
 #include <string>
 #include <opencv2\opencv.hpp>
 #include <opencv2/imgproc.hpp>
-#include "C:\\Users\\YRY\\Desktop\\StarWars-Companion-dev\\subwidget\\subwidget.h" //需要更改绝对路径
+#include "../subwidget/subwidget.h"
 #include "../Camera_module/camera_module.h"
 #include "../DL_module/DL_module.h"
 
@@ -32,6 +32,7 @@ public:
     void run();
 
 private slots:
+    void on_pushButton_clicked();
     void on_pushButton_2_clicked();
 
 private:
@@ -39,6 +40,7 @@ private:
     QGraphicsPixmapItem* m_imageItem;
     Camera* cam;
     DLmodule* model;
+    subwidget*subWindow;
     int result;
     int stop;
 };

@@ -1,7 +1,11 @@
 #include "subwidget.h"
 #include "ui_subwidget.h"
+#include <QDebug>
+#include <QString>
+#include <iostream>
 
-subwidget::subwidget(QWidget *parent)
+using namespace std;
+subwidget::subwidget(QWidget *parent, string db_path)
     : QMainWindow(parent)
     , ui(new Ui::subwidget)
 {
@@ -44,11 +48,27 @@ subwidget::subwidget(QWidget *parent)
     ui->progressBar->setMaximum(6);
     //设置图片起始
     ImageIndex = 1;
+    //init db
+
+
+    dbModule=(SQLiteHelper*)new SQLiteHelper();
+
+    const char* path=db_path.c_str();
+    dbModule->openDB(const_cast<char*>(path));
+
+
 
 }
 
+void subwidget::setID(int id)
+{
+   char* temp_name=dbModule->nameQuery(id);
+   if(temp_name != nullptr){
+          this->setInfo(id, 0, temp_name, "N/A"); //目前只支持名字
+   }
 
-void subwidget::GetInfo(int ID,int Age,QString Name, QString Intro)
+}
+void subwidget::setInfo(int ID,int Age,QString Name, QString Intro)
 {
     //SQL 查询返回结果
     //当上级跳转信号时设置
