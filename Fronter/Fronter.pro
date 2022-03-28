@@ -72,7 +72,6 @@ LIBS += $$quote(C:\Program Files (x86)\Intel\openvino_2021.4.752\opencv\lib\open
 
 DISTFILES += \
     ../DL_module/mobilenet.onnx \
-    ../Database/star_war.db \
     ../subwidget/image/.DS_Store \
     ../subwidget/image/1/.DS_Store \
     ../subwidget/image/1/1.jpg \

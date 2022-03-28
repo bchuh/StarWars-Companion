@@ -13,9 +13,14 @@ SQLiteHelper::~SQLiteHelper() {
 
 char* SQLiteHelper::nameQuery(int ID) {
 
+
 	int r;      //���ر�������
 	int c;      //���ر�����
 	int rc;     //���������Ƿ�ɹ�
+
+    if(ID>5)
+        return nullptr;
+
 	string condition = " id = ";
 	string sid = to_string(ID);    //int id ת��Ϊ�ַ�������
 	condition = "select name from information where" + condition + sid + ";";
