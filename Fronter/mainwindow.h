@@ -34,7 +34,7 @@ public:
 private slots:
     void on_pushButton_clicked();
     void on_pushButton_2_clicked();
-
+    void continue_run();
 private:
     Ui::MainWindow* ui;
     QGraphicsPixmapItem* m_imageItem;

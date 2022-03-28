@@ -8,10 +8,11 @@ SQLiteHelper::SQLiteHelper() {
 }
 
 SQLiteHelper::~SQLiteHelper() {
-
+    closeDB();
 }
 
 char* SQLiteHelper::nameQuery(int ID) {
+
 	int r;      //���ر�������
 	int c;      //���ر�����
 	int rc;     //���������Ƿ�ɹ�
@@ -26,6 +27,7 @@ char* SQLiteHelper::nameQuery(int ID) {
 		return result[1];
 	else 
         return nullptr;
+
 }
 
 /*char* infoQuery(int ID) {
@@ -38,19 +40,23 @@ char* picQuery(int ID) {
 
 bool SQLiteHelper::openDB(char* path)
 {
-    cout<<path;
-	int last = sqlite3_open(path, &db);
+
+    db=nullptr;
+    int last = sqlite3_open("star_war.db", &db);
+
 	if (SQLITE_OK != last)
 	{
 		cout << "Fail to open db" << endl;
+        //PostQuitMessage(0);
         return false;
-		PostQuitMessage(0);
     }else
+
         return true;
+
 }
 
 void SQLiteHelper::closeDB()
 {
-	sqlite3_close(db);
+    //sqlite3_close(db);
 
 }

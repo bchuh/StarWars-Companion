@@ -26,20 +26,20 @@ MainWindow::MainWindow(QWidget* parent)
     this->model = DLmodule::getInstance("C:\\Users\\zhuze\\Downloads\\StarWars-Companion-dev\\StarWars-Companion-dev\\DL_module");
     this->subWindow=new subwidget(this, "C:\\Users\\zhuze\\Downloads\\StarWars-Companion-dev\\StarWars-Companion-dev\\Database\\star_war.db");
     subWindow->hide();
+    connect(subWindow, SIGNAL(mySignal()), this, SLOT(continue_run()));
 
 }
 void MainWindow::run() {
+
     cv::Mat image;
     QTime dieTime;
     auto size = ui->graphicsView->size();
-    QScreen* screen = QGuiApplication::primaryScreen();
-    auto dpi = screen->devicePixelRatio();
     while (true)
     {
         image = cam->nextFrame();
         result = model->classify(image);
-        cv::resize(image, image, cv::Size(size.width() * dpi, size.height() * dpi));
-        std::cout << names[result] << endl;//数据库链接更改
+        cv::resize(image, image, cv::Size(size.width(), size.height()));
+      //  std::cout << names[result] << endl;//数据库链接更改
         //场景
         size = ui->graphicsView->size();
         //控件绑定场景
@@ -61,7 +61,9 @@ void MainWindow::run() {
             break;
         }
         //update();
+
     }
+
 }
 
 MainWindow::~MainWindow()
@@ -76,6 +78,14 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_pushButton_clicked()
 {
-    subWindow->setID(this->result);
+    cout<<"clicked"<<endl;
+    cout<<result<<endl;
     subWindow->show();
+    subWindow->setID(this->result);
+    run();
+
+}
+
+void MainWindow::continue_run(){
+    run();
 }

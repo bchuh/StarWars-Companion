@@ -37,6 +37,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 INCLUDEPATH += -L$$PWD/..
 
 INCLUDEPATH += $$quote(C:\Program Files (x86)\Intel\openvino_2021.4.752\opencv\include)
+INCLUDEPATH += $$quote(C:\Users\zhuze\OneDrive - Macau University of Science and Technology\Bill\3th-2\Software_proj_manage\StarWars-Companion\Database)
+LIBS += $$quote(C:\Users\zhuze\OneDrive - Macau University of Science and Technology\Bill\3th-2\Software_proj_manage\StarWars-Companion\Database\sqlite.lib)
 LIBS += $$quote(C:\Program Files (x86)\Intel\openvino_2021.4.752\opencv\lib\opencv_calib3d453.lib)
 LIBS += $$quote(C:\Program Files (x86)\Intel\openvino_2021.4.752\opencv\lib\opencv_calib3d453d.lib)
 LIBS += $$quote(C:\Program Files (x86)\Intel\openvino_2021.4.752\opencv\lib\opencv_core453.lib)
@@ -86,10 +88,6 @@ RESOURCES += \
 
 
 
-win32: LIBS += -L$$PWD/../Database/ -lsqlite3
 
-INCLUDEPATH += $$PWD/../Database
-DEPENDPATH += $$PWD/../Database
 
-win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../Database/sqlite3.lib
-else:win32-g++: PRE_TARGETDEPS += $$PWD/../Database/libsqlite3.a
+
