@@ -68,6 +68,8 @@ void MainWindow::run() {
 
 MainWindow::~MainWindow()
 {
+    this->cam->Destory();
+    this->model->Destory();
     delete ui;
 }
 
