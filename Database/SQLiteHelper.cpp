@@ -13,9 +13,12 @@ SQLiteHelper::~SQLiteHelper() {
 
 char* SQLiteHelper::nameQuery(int ID) {
 
+
 	int r;      //���ر�������
 	int c;      //���ر�����
 	int rc;     //���������Ƿ�ɹ�
+
+
 	string condition = " id = ";
 	string sid = to_string(ID);    //int id ת��Ϊ�ַ�������
 	condition = "select name from information where" + condition + sid + ";";
@@ -42,7 +45,7 @@ bool SQLiteHelper::openDB(char* path)
 {
 
     db=nullptr;
-    int last = sqlite3_open("star_war.db", &db);
+    int last = sqlite3_open(path, &db);
 
 	if (SQLITE_OK != last)
 	{

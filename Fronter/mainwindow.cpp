@@ -21,10 +21,12 @@ MainWindow::MainWindow(QWidget* parent)
     //场景增加画布
     m_scene->addItem(m_imageItem);
     ui->graphicsView->setScene(m_scene);
+    ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->show();
     this->cam = Camera::getInstance();
     this->model = DLmodule::getInstance("C:\\Users\\zhuze\\Downloads\\StarWars-Companion-dev\\StarWars-Companion-dev\\DL_module");
-    this->subWindow=new subwidget(this, "C:\\Users\\zhuze\\Downloads\\StarWars-Companion-dev\\StarWars-Companion-dev\\Database\\star_war.db");
+    this->subWindow=new subwidget(this, "C:\\Users\\zhuze\\OneDrive - Macau University of Science and Technology\\Bill\\3th-2\\Software_proj_manage\\StarWars-Companion\\Database\\star_war.db");
     subWindow->hide();
     connect(subWindow, SIGNAL(mySignal()), this, SLOT(continue_run()));
 
@@ -36,10 +38,11 @@ void MainWindow::run() {
     auto size = ui->graphicsView->size();
     while (true)
     {
-        image = cam->nextFrame();
+        auto Rec=
+        image = cam->nextFrame(ui->graphicsView->width(), ui->graphicsView->height());
         result = model->classify(image);
         cv::resize(image, image, cv::Size(size.width(), size.height()));
-      //  std::cout << names[result] << endl;//数据库链接更改
+        std::cout << names[result] << endl;//数据库链接更改
         //场景
         size = ui->graphicsView->size();
         //控件绑定场景
@@ -68,6 +71,8 @@ void MainWindow::run() {
 
 MainWindow::~MainWindow()
 {
+    this->cam->Destory();
+    this->model->Destory();
     delete ui;
 }
 

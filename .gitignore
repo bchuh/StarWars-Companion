@@ -371,3 +371,4 @@ MigrationBackup/
 /Fronter/Fronter.pro.user.b52a7f8
 /DL_module/源.cpp
 /Fronter/msvc_make.bat
+/Database/sqlite3.lib

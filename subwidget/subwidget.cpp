@@ -70,13 +70,14 @@ void subwidget::setID(int id)
    //this->setInfo(id, 0, "aa", "N/A");
 
    char* temp_name=dbModule->nameQuery(id);
+   if(temp_name == nullptr){
+        cout<<"Error:nameQuery return NULL!"<<endl;
+        return;
+   }
+
    string name=temp_name;
    //cout<<dbModule->nameQuery(id);
-   if(temp_name != nullptr){
-          this->setInfo(id, 0, QString::fromStdString(name), "N/A"); //目前只支持名字
-   }else{
-       cout<<"Error:nameQuery return NULL!"<<endl;
-   }
+   this->setInfo(id, 0, QString::fromStdString(name), "N/A"); //目前只支持名字
 
 }
 void subwidget::setInfo(int ID,int Age,QString Name, QString Intro)
@@ -199,7 +200,7 @@ void subwidget::paintEvent(QPaintEvent *)
     //P.ID = 1;
     QImage image1(":/" + QString::number(P.ID) + "/" + QString::number(ImageIndex) + ".jpg");
     QImage image2(":/" + QString::number(P.ID) + "/" + QString::number(ImageIndex + 1) + ".jpg");
-    QImage image3(":/icon.png");
+    QImage image3(":/icon/icon.png");
     painter.drawImage(rect1,image1);
     painter.drawImage(rect2,image2);
     painter.drawImage(rect3,image3);
