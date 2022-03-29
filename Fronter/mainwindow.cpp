@@ -38,7 +38,8 @@ void MainWindow::run() {
     auto size = ui->graphicsView->size();
     while (true)
     {
-        image = cam->nextFrame();
+        auto Rec=
+        image = cam->nextFrame(ui->graphicsView->width(), ui->graphicsView->height());
         result = model->classify(image);
         cv::resize(image, image, cv::Size(size.width(), size.height()));
         std::cout << names[result] << endl;//数据库链接更改
