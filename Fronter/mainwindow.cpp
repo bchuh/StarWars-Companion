@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget* parent)
     ui->graphicsView->show();
     this->cam = Camera::getInstance();
     this->model = DLmodule::getInstance("C:\\Users\\zhuze\\Downloads\\StarWars-Companion-dev\\StarWars-Companion-dev\\DL_module");
-    this->subWindow=new subwidget(this, "C:\\Users\\zhuze\\Downloads\\StarWars-Companion-dev\\StarWars-Companion-dev\\Database\\star_war.db");
+    this->subWindow=new subwidget(this, "C:\\Users\\zhuze\\OneDrive - Macau University of Science and Technology\\Bill\\3th-2\\Software_proj_manage\\StarWars-Companion\\Database\\star_war.db");
     subWindow->hide();
     connect(subWindow, SIGNAL(mySignal()), this, SLOT(continue_run()));
 

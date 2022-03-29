@@ -45,7 +45,7 @@ bool SQLiteHelper::openDB(char* path)
 {
 
     db=nullptr;
-    int last = sqlite3_open("star_war.db", &db);
+    int last = sqlite3_open(path, &db);
 
 	if (SQLITE_OK != last)
 	{
