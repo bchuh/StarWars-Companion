@@ -13,10 +13,20 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 0, 0, 255), stop:0.758427 rgba(76, 76, 76, 255));</string>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QPushButton" name="pushButton_2">
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);
+border:2px groove black;border-radius:10px;padding:4px 6px;background-color: rgb(145, 145, 145);border-color: rgb(255, 203, 0);</string>
+      </property>
       <property name="text">
        <string>close</string>
       </property>
@@ -37,7 +47,15 @@
        <number>1</number>
       </property>
       <item>
-       <widget class="QGraphicsView" name="graphicsView"/>
+       <widget class="QGraphicsView" name="graphicsView">
+        <property name="styleSheet">
+         <string notr="true">border:2px groove black;
+border-radius:10px;
+padding:4px 6px;
+background-color: rgb(145, 145, 145);
+border-color: rgb(255, 203, 0);</string>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QPushButton" name="pushButton">
@@ -53,6 +71,10 @@
           <weight>75</weight>
           <bold>true</bold>
          </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);
+border:2px groove black;border-radius:10px;padding:4px 6px;background-color: rgb(145, 145, 145);border-color: rgb(255, 203, 0);</string>
         </property>
         <property name="text">
          <string>Scan</string>

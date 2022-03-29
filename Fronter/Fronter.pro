@@ -81,8 +81,7 @@ DISTFILES += \
     ../subwidget/image/1/5.jpg
 
 RESOURCES += \
-    ../subwidget/image/1/images.qrc \
-    ../subwidget/image/imageS.qrc
+    image/imageS.qrc
 
 
 

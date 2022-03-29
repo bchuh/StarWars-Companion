@@ -200,7 +200,7 @@ void subwidget::paintEvent(QPaintEvent *)
     //P.ID = 1;
     QImage image1(":/" + QString::number(P.ID) + "/" + QString::number(ImageIndex) + ".jpg");
     QImage image2(":/" + QString::number(P.ID) + "/" + QString::number(ImageIndex + 1) + ".jpg");
-    QImage image3(":/icon.png");
+    QImage image3(":/icon/icon.png");
     painter.drawImage(rect1,image1);
     painter.drawImage(rect2,image2);
     painter.drawImage(rect3,image3);
