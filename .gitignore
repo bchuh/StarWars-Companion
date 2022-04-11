@@ -9,6 +9,11 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.pro
+*.pro.user
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -348,3 +353,22 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/Camera_module/Camera module.vcxproj.filters
+/Camera_module/Camera module.vcxproj
+/Camera_module/Camera module.sln
+/SW companion.vcxproj.filters
+/SW companion.vcxproj
+/SW companion.sln
+/end2end.onnx
+/classify_test.cpp
+/2.png
+/1.jpg
+/Camera_module/源.cpp
+/build-Fronter-Desktop_Qt_5_9_9_MSVC2015_32bit-Release
+/build-Fronter-Desktop_Qt_6_0_3_MSVC2019_64bit-Debug
+/build-Fronter-Desktop_Qt_6_0_3_MSVC2019_64bit-Release
+/build-Fronter-Qt_6_0_2_MSVC_2019-Release
+/Fronter/Fronter.pro.user.b52a7f8
+/DL_module/源.cpp
+/Fronter/msvc_make.bat
+/Database/sqlite3.lib
