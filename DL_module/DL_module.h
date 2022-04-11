@@ -1,6 +1,7 @@
 #ifndef DL_MODULE
 #define DL_MODULE
 #include <opencv2/opencv.hpp>
+#include "detector.h"
 
 using namespace std;
 
@@ -30,11 +31,13 @@ class DLmodule
 public:
 	static DLmodule* getInstance(string model_path);
 	int classify(const cv::Mat& frame);
+	vector<Detection>& detect(cv::Mat frame);
 	static void Destory();
 	bool isReady();
 private:
 	static DLmodule* instance;
 	Classifier* classifier;
+	Detector* detector;
 	DLmodule(string model_path);
 	~DLmodule();
 };

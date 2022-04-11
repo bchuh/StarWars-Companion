@@ -10,6 +10,7 @@ CONFIG += console c++17
 SOURCES += \
     ../Camera_module/camera_module.cpp \
     ../DL_module/DL_module.cpp \
+    ../DL_module/detector.cpp \
     ../Database/SQLiteHelper.cpp \
     ../subwidget/subwidget.cpp \
     main.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
 HEADERS += \
     ../Camera_module/camera_module.h \
     ../DL_module/DL_module.h \
+    ../DL_module/detector.h \
     ../Database/SQLiteHelper.h \
     ../subwidget/subwidget.h \
     mainwindow.h

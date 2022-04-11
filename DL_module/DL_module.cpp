@@ -117,6 +117,11 @@ int DLmodule::classify(const cv::Mat& frame)
 	return this->classifier->classify(frame);
 }
 
+vector<Detection>& DLmodule::detect(cv::Mat frame)
+{
+	return this->detector->detect(frame);
+}
+
 void DLmodule::Destory()
 {
 	delete DLmodule::instance;
@@ -130,12 +135,16 @@ bool DLmodule::isReady()
 
 DLmodule::DLmodule(string model_path)
 {
-	String path = model_path + "\\mobilenet.onnx";
-	this->classifier = Classifier::getInstance(path);
+	String classifier_path = model_path + "\\mobilenet.onnx";
+	String dete_path = model_path + "\\yolov5s.onnx";
+	this->classifier = Classifier::getInstance(classifier_path);
+	this->detector = Detector::getInstance(dete_path);
 }
 
 DLmodule::~DLmodule()
 {
 	Classifier::Destroy();
 	this->classifier = nullptr;
+	Detector::Destroy();
+	this->detector = nullptr;
 }

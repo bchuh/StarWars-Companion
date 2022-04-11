@@ -43,6 +43,8 @@ private:
     subwidget*subWindow;
     int result;
     int stop;
+    bool isRunning=true;
+    cv::Mat frame;
 };
 
 
