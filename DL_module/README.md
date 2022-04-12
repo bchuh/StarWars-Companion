@@ -18,3 +18,13 @@
 		}
 	}
   ```
+  
+  ## Training log
+  + Training config:
+  	+ Optimizer: RMSprop
+  	+ Learning rate scheme: step decay
+  	+ Augmentation: random crop/resize, random flip, random color augmentation, random style changing.
+  + result: 90% top-1 acc on val set, 87% top-1 acc on test set.
+  &emsp;
+<img src="https://github.com/bchuh/ImageLib/blob/master/2022.4.12/lr.jpg" width = "500" height = "500" alt="Picture missing" align=center />
+<img src="https://github.com/bchuh/ImageLib/blob/master/2022.4.12/loss_acc.jpg" width = "1000" height = "500" alt="Picture missing" align=center />
