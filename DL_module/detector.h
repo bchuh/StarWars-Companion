@@ -2,7 +2,7 @@
 #define DETECTOR
 #include <opencv2/opencv.hpp>
 
-using namespace std;
+//using namespace std;
 
 struct Detection
 {
@@ -15,7 +15,7 @@ class Detector
 {
 public:
 	std::vector<Detection>& detect(cv::Mat frame);
-	static Detector* getInstance(string onnx_path);
+    static Detector* getInstance(std::string onnx_path);
 	bool isReady();
 	static void Destroy();
 	std::vector<Detection> output;
@@ -31,8 +31,8 @@ private:
 	static Detector* instance;
 	cv::Mat format_yolov5(const cv::Mat& source);
 	~Detector();
-	Detector(string onnx_path);
-	bool fileExist(string name);
+    Detector(std::string onnx_path);
+    bool fileExist(std::string name);
 };
 #endif
 

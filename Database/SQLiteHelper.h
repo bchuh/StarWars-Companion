@@ -1,5 +1,5 @@
 
-#include <sqlite3.h>
+#include <../Database/sqlite3.h>
 #include <windows.h>
 #include <string>
 class SQLiteHelper
