@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QErrorMessage>
 #include <QTime>
 #include <QScreen>
 #include <QString>
@@ -25,8 +24,8 @@ MainWindow::MainWindow(QWidget* parent)
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->show();
     this->cam = Camera::getInstance();
-    this->model = DLmodule::getInstance("../StarWars-Companion\\DL_module");
-    this->subWindow=new subwidget(this, "../StarWars-Companion\\Database\\star_war.db");
+    this->model = DLmodule::getInstance("C:\\Users\\zhuze\\OneDrive - Macau University of Science and Technology\\Bill\\3th-2\\Software_proj_manage\\StarWars-Companion\\DL_module");
+    this->subWindow=new subwidget(this, "C:\\Users\\zhuze\\OneDrive - Macau University of Science and Technology\\Bill\\3th-2\\Software_proj_manage\\StarWars-Companion\\Database\\star_war.db");
     subWindow->hide();
     connect(subWindow, SIGNAL(mySignal()), this, SLOT(continue_run()));
 
@@ -40,7 +39,7 @@ void MainWindow::run() {
     while (isRunning)
     {
         frame = cam->nextFrame(ui->graphicsView->width(), ui->graphicsView->height());
-        //result = model->classify(frame); 测试是否不需要
+        result = model->classify(frame);
         cv::resize(frame, frame, cv::Size(size.width(), size.height()));
        // std::cout << names[result] << endl;//数据库链接更改
         //场景
@@ -75,18 +74,6 @@ MainWindow::~MainWindow()
     this->model->Destory();
     delete ui;
 }
-void MainWindow::select()
-{
-    int index=0;
-    cout<<"clicked"<<endl;
-    QPushButton* temp=(QPushButton*)sender();
-    QString name=temp->objectName();
-    index=name.toInt();std::cout<<"the index is "<<index<<std::endl<<"the person id is "<<result.at(index).class_id<<std::endl;
-    subWindow->show();
-    subWindow->setID(result.at(index).class_id);
-    continue_run();
-
-}
 
 void MainWindow::on_pushButton_2_clicked()
 {
@@ -95,39 +82,34 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_pushButton_clicked()
 {
-    int number,index;
-    result = model->detect(frame);
+    /*
+    cout<<"clicked"<<endl;
+    cout<<result<<endl;
+    subWindow->show();
+    subWindow->setID(this->result);
+    run();
+    */
+    auto result = model->detect(frame);
     isRunning=false;
-    number=result.size();
-    cout<<"total detected number is "<<result.size()<<endl;
-    for(index=number-1;index>=0;index--)
-    {
-        cout<<index<<endl;
-        auto item = result.at(index);
+    cout<<result.size()<<endl;
+    if(result.size()>0){
+        auto item = result.at(0);
         auto rect=item.box;
         cv::Point center_of_rect = (rect.br() + rect.tl())*0.5;
-        QString qstrStylesheet = "background-color:rgb(255,255,255)";
-        QPushButton * button=new QPushButton(ui->graphicsView);
-        button->setStyleSheet(qstrStylesheet);
-        button->setObjectName(QString::number(index));
-        connect(button, SIGNAL(pressed()), this, SLOT(select()));
-        ButtonList.prepend(button);
-        button->move(center_of_rect.x, center_of_rect.y);
-        button->show();
+        auto buttom = new QPushButton(ui->graphicsView);//这个buttom只是演示用法，建议保存好创建的buttom的指针
+        buttom->move(center_of_rect.x, center_of_rect.y);
+        buttom->show();
         update();
+    }else{
+        cout<<"no result!"<<endl;
+        isRunning=true;
+        run();
     }
 
-    //cout<<"no result"<<endl;
-    //isRunning=true;
-    //run();
 
 
 }
 
-
 void MainWindow::continue_run(){
-    for(int size=0; size<ButtonList.size(); size++)
-        delete ButtonList[size];
-    isRunning=true;
     run();
 }

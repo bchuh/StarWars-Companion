@@ -3,14 +3,14 @@
 #include <opencv2/opencv.hpp>
 #include "detector.h"
 
-//using namespace std;
+using namespace std;
 
 
 class Classifier
 {
 public:
 	int classify(cv::Mat frame);
-    static Classifier* getInstance(std::string onnx_path);
+	static Classifier* getInstance(string onnx_path);
 	bool isReady();
 	static void Destroy();
 
@@ -22,23 +22,23 @@ private:
 	static Classifier* instance;
 	void preProcess(const cv::Mat& image, cv::Mat& image_blob);
 	~Classifier();
-    Classifier(std::string onnx_path);
-    bool fileExist(std::string name);
+	Classifier(string onnx_path);
+	bool fileExist(string name);
 };
 
 class DLmodule
 {
 public:
-    static DLmodule* getInstance(std::string model_path);
+	static DLmodule* getInstance(string model_path);
 	int classify(const cv::Mat& frame);
-    std::vector<Detection>& detect(cv::Mat frame);
+	vector<Detection>& detect(cv::Mat frame);
 	static void Destory();
 	bool isReady();
 private:
 	static DLmodule* instance;
 	Classifier* classifier;
 	Detector* detector;
-    DLmodule(std::string model_path);
+	DLmodule(string model_path);
 	~DLmodule();
 };
 

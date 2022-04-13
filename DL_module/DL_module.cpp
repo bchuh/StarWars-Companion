@@ -1,6 +1,6 @@
 #include "DL_module.h"
 
-//using namespace std;
+using namespace std;
 using namespace cv;
 Classifier* Classifier::instance = nullptr;
 DLmodule* DLmodule::instance = nullptr;
@@ -22,7 +22,7 @@ int Classifier::classify(cv::Mat inputFrame)
 	return classId;
 }
 
-Classifier* Classifier::getInstance(std::string onnx_path)
+Classifier* Classifier::getInstance(string onnx_path)
 {
 	if (Classifier::instance == nullptr)
 	{
@@ -42,15 +42,15 @@ void Classifier::Destroy()
 	Classifier::instance = nullptr;
 }
 
-Classifier::Classifier(std::string onnx_path)
+Classifier::Classifier(string onnx_path)
 {
 	String bin_model = onnx_path;
 	if (!fileExist(bin_model)) {
 		int temp;
 		this->_isReady = false;
-        std::cout << "DL_module Error: Can't open(or find) file:" << bin_model << std::endl;
+		cout << "DL_module Error: Can't open(or find) file:" << bin_model << endl;
 		//Can't read .onnx, please contact Zhu Zengliang if you encounter this.
-        std::cin >> temp;
+		cin >> temp;
 		return;
 	}
 	else {
@@ -65,7 +65,7 @@ Classifier::~Classifier()
 	this->_isReady = false;
 }
 
-bool Classifier::fileExist(std::string name)
+bool Classifier::fileExist(string name)
 {
 	if (FILE* file = fopen(name.c_str(), "r")) {
 		fclose(file);
@@ -103,7 +103,7 @@ void Classifier::preProcess(const cv::Mat& image, cv::Mat& image_blob)
 	outt.copyTo(image_blob);
 }
 
-DLmodule* DLmodule::getInstance(std::string model_path)
+DLmodule* DLmodule::getInstance(string model_path)
 {
 	if (DLmodule::instance == nullptr)
 	{
@@ -117,7 +117,7 @@ int DLmodule::classify(const cv::Mat& frame)
 	return this->classifier->classify(frame);
 }
 
-std::vector<Detection>& DLmodule::detect(cv::Mat frame)
+vector<Detection>& DLmodule::detect(cv::Mat frame)
 {
 	return this->detector->detect(frame);
 }
@@ -133,7 +133,7 @@ bool DLmodule::isReady()
 	return classifier->isReady();
 }
 
-DLmodule::DLmodule(std::string model_path)
+DLmodule::DLmodule(string model_path)
 {
 	String classifier_path = model_path + "\\mobilenet.onnx";
 	String dete_path = model_path + "\\yolov5s.onnx";

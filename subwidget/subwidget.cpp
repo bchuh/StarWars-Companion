@@ -5,7 +5,7 @@
 #include <iostream>
 
 using namespace std;
-subwidget::subwidget(QWidget *parent, std::string db_path)
+subwidget::subwidget(QWidget *parent, string db_path)
     : QMainWindow(parent)
     , ui(new Ui::subwidget)
 {
@@ -138,7 +138,6 @@ void subwidget::on_Back_clicked()
 {
     //返回上一级界面
     hide();
-
     emit mySignal();
 /*
     //演示 当上级跳转传入值 设置文本刷新界面
