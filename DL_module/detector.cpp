@@ -1,6 +1,6 @@
 #include "detector.h"
 
-using namespace std;
+//using namespace std;
 using namespace cv;
 Detector* Detector::instance = nullptr;
 
@@ -68,8 +68,8 @@ std::vector<Detection>& Detector::detect(cv::Mat frame)
         int idx = nms_result[i];
         Detection result;
         result.class_id = class_ids[idx];
-        if (result.class_id != 0)
-            continue;
+        //if (result.class_id != 0)
+        //    continue;
         result.confidence = confidences[idx];
         result.box = boxes[idx];
         output.push_back(result);
@@ -77,7 +77,7 @@ std::vector<Detection>& Detector::detect(cv::Mat frame)
     return output;
 }
 
-Detector* Detector::getInstance(string onnx_path)
+Detector* Detector::getInstance(std::string onnx_path)
 {
 	if (Detector::instance == nullptr)
 	{
@@ -97,15 +97,15 @@ void Detector::Destroy()
 	Detector::instance = nullptr;
 }
 
-Detector::Detector(string onnx_path):output()
+Detector::Detector(std::string onnx_path):output()
 {
 	String bin_model = onnx_path;
 	if (!fileExist(bin_model)) {
 		int temp;
 		this->_isReady = false;
-		cout << "Detector Error: Can't open(or find) file:" << bin_model << endl;
+        std::cout << "Detector Error: Can't open(or find) file:" << bin_model << std::endl;
 		//Can't read .onnx, please contact Zhu Zengliang if you encounter this.
-		cin >> temp;
+        std::cin >> temp;
 		return;
 	}
 	else {
@@ -130,7 +130,7 @@ Detector::~Detector()
 	this->_isReady = false;
 }
 
-bool Detector::fileExist(string name)
+bool Detector::fileExist(std::string name)
 {
 	if (FILE* file = fopen(name.c_str(), "r")) {
 		fclose(file);

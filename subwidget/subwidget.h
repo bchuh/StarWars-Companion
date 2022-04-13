@@ -13,14 +13,14 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class subwidget; }
 QT_END_NAMESPACE
 
-using namespace std;
+//using namespace std;
 
 class subwidget : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    subwidget(QWidget *parent = nullptr, string db_path = nullptr);
+    subwidget(QWidget *parent = nullptr, std::string db_path = nullptr);
     ~subwidget();
     void setID(int id);
     //角色信息
