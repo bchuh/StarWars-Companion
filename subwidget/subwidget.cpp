@@ -115,7 +115,7 @@ void subwidget::on_Previous_clicked()
 {
     if( --ImageIndex  < 1)
     {
-        ImageIndex = 4;
+        ImageIndex = 2;
     }
     emit setSignal();
     ui->progressBar->setValue(0);
@@ -124,7 +124,7 @@ void subwidget::on_Previous_clicked()
 
 void subwidget::on_Next_clicked()
 {
-    if( ++ ImageIndex > 4)
+    if( ++ ImageIndex > 2)
     {
         ImageIndex = 1;
     }

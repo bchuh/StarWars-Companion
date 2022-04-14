@@ -8,11 +8,10 @@ class SQLiteHelper
 public:
 	SQLiteHelper();
 	virtual ~SQLiteHelper();
-	sqlite3* db;    //数据库本身
+    sqlite3* db;    //数据库本身
 	char* nameQuery(int ID);   //查询name函数
-	//char* infoQuery(int ID); //查询info函数
-	//char* picQuery(int ID);  //查询picture函数
-	void openDB(char* path);   //打开数据库
+	char* infoQuery(int ID); //查询info函数
+    bool openDB(char* path);   //打开数据库
 	void closeDB();            //关闭数据库
 };
 ```
@@ -24,3 +23,18 @@ char* nameQuery(int ID);   //查询name函数
 注意：返回的是char*类型(字符串) 
 
 函数的具体使用可以看下test.cpp(main测试)
+
+```c
+void main()
+{
+	SQLiteHelper* help = new SQLiteHelper();
+	char* name = "star_war.db";   //数据库文件名
+	help->openDB(name);
+	cout << help->nameQuery(3)<<endl;
+	cout << help->infoQuery(3);
+	help->closeDB();
+
+}
+```
+
+infoQuery连接前端和之前nameQuery应该可以是一样的
