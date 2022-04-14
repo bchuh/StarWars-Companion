@@ -68,8 +68,8 @@ std::vector<Detection>& Detector::detect(cv::Mat frame)
         int idx = nms_result[i];
         Detection result;
         result.class_id = class_ids[idx];
-        //if (result.class_id != 0)
-        //    continue;
+        if (result.class_id != 0)
+            continue;
         result.confidence = confidences[idx];
         result.box = boxes[idx];
         output.push_back(result);

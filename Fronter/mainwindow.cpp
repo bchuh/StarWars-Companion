@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QErrorMessage>
 #include <QTime>
 #include <QScreen>
 #include <QString>
@@ -13,8 +12,6 @@ MainWindow::MainWindow(QWidget* parent)
 {
     ui->setupUi(this);
     stop = -1;
-    connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(on_pushButton_clicked()));
-    connect(ui->pushButton_2, SIGNAL(clicked(bool)), this, SLOT(on_pushButton_2_clicked()));
     //画布
     auto m_scene = new QGraphicsScene();
     this->m_imageItem = new QGraphicsPixmapItem();
@@ -99,10 +96,15 @@ void MainWindow::on_pushButton_clicked()
     result = model->detect(frame);
     isRunning=false;
     number=result.size();
-    cout<<"total detected number is "<<result.size()<<endl;
-    for(index=number-1;index>=0;index--)
+    //cout<<"total detected number is "<<result.size()<<endl;
+    if(0==number)
     {
-        cout<<index<<endl;
+        cout<<"no result"<<endl;
+        continue_run();
+    }
+    else for(index=number-1;index>=0;index--)
+    {
+        //cout<<index<<endl;
         auto item = result.at(index);
         auto rect=item.box;
         cv::Point center_of_rect = (rect.br() + rect.tl())*0.5;
@@ -117,17 +119,15 @@ void MainWindow::on_pushButton_clicked()
         update();
     }
 
-    //cout<<"no result"<<endl;
-    //isRunning=true;
-    //run();
+
 
 
 }
 
 
 void MainWindow::continue_run(){
-    for(int size=0; size<ButtonList.size(); size++)
-        delete ButtonList[size];
+    qDeleteAll(ButtonList.begin(),ButtonList.end());
+    ButtonList.clear();
     isRunning=true;
     run();
 }
