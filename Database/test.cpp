@@ -7,9 +7,10 @@ using namespace std;
 void main()
 {
 	SQLiteHelper* help = new SQLiteHelper();
-	char* name = "star_war.db";
+	char* name = "star_war.db";   //数据库文件名
 	help->openDB(name);
-	cout << help->nameQuery(3);
+	cout << help->nameQuery(3)<<endl;
+	cout << help->infoQuery(3);
 	help->closeDB();
 
 }
