@@ -31,6 +31,7 @@ public:
     MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
     void run();
+    QImage cropped_frame;
 
 private slots:
     void on_pushButton_clicked();

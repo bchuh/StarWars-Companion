@@ -112,9 +112,34 @@ DLmodule* DLmodule::getInstance(std::string model_path)
 	return DLmodule::instance;
 }
 
-int DLmodule::classify(const cv::Mat& frame)
+int DLmodule::classify(const cv::Mat& frame, int result_index)
 {
-	return this->classifier->classify(frame);
+    if(result_index == -1) // 不进行目标裁剪
+        return this->classifier->classify(frame);
+    else{
+        auto result = detector->output.at(result_index);
+        auto cropped_frame = frame(result.box);
+        return this->classifier->classify(cropped_frame);
+    }
+}
+QImage DLmodule::getCroppedImage(const cv::Mat&frame, int result_index)
+{
+    auto result = detector->output.at(result_index);
+    auto cropped_frame = frame(result.box);
+    std::cout<<cropped_frame.cols<<','<<cropped_frame.rows<<std::endl;
+    float old_ratio=cropped_frame.cols*1.0/(cropped_frame.rows);
+    float new_ratio=1.65;
+    int total_boarder;
+    if (new_ratio>=old_ratio){
+        total_boarder = floor(cropped_frame.rows * new_ratio)-cropped_frame.cols;
+        cv::copyMakeBorder(cropped_frame, cropped_result, 0, 0, total_boarder/2, total_boarder/2, cv::BORDER_CONSTANT);
+    }else{
+        total_boarder = floor(cropped_frame.cols/new_ratio)-cropped_frame.rows;
+        cv::copyMakeBorder(cropped_frame, cropped_result,total_boarder/2, total_boarder/2 ,0 ,0 , cv::BORDER_CONSTANT);
+    }
+    std::cout<<cropped_frame.cols<<','<<cropped_frame.rows<<std::endl;
+    return QImage(cropped_result.data, cropped_result.cols, cropped_result.rows, cropped_result.step, QImage::Format_RGB888);
+
 }
 
 std::vector<Detection>& DLmodule::detect(cv::Mat frame)

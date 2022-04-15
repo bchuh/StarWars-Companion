@@ -22,10 +22,12 @@ MainWindow::MainWindow(QWidget* parent)
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->show();
     this->cam = Camera::getInstance();
-    this->model = DLmodule::getInstance("../StarWars-Companion\\DL_module");
-    this->subWindow=new subwidget(this, "../StarWars-Companion\\Database\\star_war.db");
+    this->model = DLmodule::getInstance("C:\\Users\\zhuze\\OneDrive - Macau University of Science and Technology\\Bill\\3th-2\\Software_proj_manage\\StarWars-Companion\\DL_module");
+    this->subWindow=new subwidget(this, "C:\\Users\\zhuze\\OneDrive - Macau University of Science and Technology\\Bill\\3th-2\\Software_proj_manage\\StarWars-Companion\\Database\\star_war.db");
+    //this->model = DLmodule::getInstance("../StarWars-Companion\\DL_module");
+    //this->subWindow = new subwidget(this, "../StarWars-Companion\\Database\\star_war.db");
     subWindow->hide();
-    connect(subWindow, SIGNAL(mySignal()), this, SLOT(continue_run()));
+    connect(subWindow, SIGNAL(returnSignal()), this, SLOT(continue_run()));
 
 
 }
@@ -79,8 +81,11 @@ void MainWindow::select()
     QPushButton* temp=(QPushButton*)sender();
     QString name=temp->objectName();
     index=name.toInt();std::cout<<"the index is "<<index<<std::endl<<"the person id is "<<result.at(index).class_id<<std::endl;
+    int class_id = model->classify(frame, index);
+    cropped_frame = model->getCroppedImage(frame, index);
+    subWindow->cropped_frame = &cropped_frame;
     subWindow->show();
-    subWindow->setID(result.at(index).class_id);
+    subWindow->setID(class_id);
     continue_run();
 
 }
@@ -108,7 +113,7 @@ void MainWindow::on_pushButton_clicked()
         auto item = result.at(index);
         auto rect=item.box;
         cv::Point center_of_rect = (rect.br() + rect.tl())*0.5;
-        QString qstrStylesheet = "background-color:rgb(255,255,255)";
+        QString qstrStylesheet = "background-color:rgb(255,255,255);border-style: solid;max-width:20px;max-height:20px;min-width:20px;min-height:20px;border-radius:16px;";
         QPushButton * button=new QPushButton(ui->graphicsView);
         button->setStyleSheet(qstrStylesheet);
         button->setObjectName(QString::number(index));
@@ -126,6 +131,7 @@ void MainWindow::on_pushButton_clicked()
 
 
 void MainWindow::continue_run(){
+    std::cout<<"continue"<<std::endl;
     qDeleteAll(ButtonList.begin(),ButtonList.end());
     ButtonList.clear();
     isRunning=true;

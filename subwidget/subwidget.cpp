@@ -139,7 +139,7 @@ void subwidget::on_Back_clicked()
     //返回上一级界面
     hide();
 
-    emit mySignal();
+    emit returnSignal();
 /*
     //演示 当上级跳转传入值 设置文本刷新界面
     P.ID = 1;
@@ -202,9 +202,12 @@ void subwidget::paintEvent(QPaintEvent *)
     QImage image1(":/" + QString::number(P.ID) + "/" + QString::number(ImageIndex) + ".jpg");
     QImage image2(":/" + QString::number(P.ID) + "/" + QString::number(ImageIndex + 1) + ".jpg");
     QImage image3(":/icon/icon.png");
-    painter.drawImage(rect1,image1);
-    painter.drawImage(rect2,image2);
-    painter.drawImage(rect3,image3);
+    if(cropped_frame!=nullptr){
+        painter.drawImage(rect1,*cropped_frame);
+        painter.drawImage(rect2,image1);
+        painter.drawImage(rect3,image3);
+    }
+
 }
 
 subwidget::~subwidget()

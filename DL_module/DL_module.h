@@ -2,6 +2,7 @@
 #define DL_MODULE
 #include <opencv2/opencv.hpp>
 #include "detector.h"
+#include <QImage>
 
 //using namespace std;
 
@@ -30,8 +31,10 @@ class DLmodule
 {
 public:
     static DLmodule* getInstance(std::string model_path);
-	int classify(const cv::Mat& frame);
+    int classify(const cv::Mat& frame, int result_index = -1);
+    QImage getCroppedImage(const cv::Mat&frame, int result_index);
     std::vector<Detection>& detect(cv::Mat frame);
+    QImage image;
 	static void Destory();
 	bool isReady();
 private:
@@ -39,6 +42,7 @@ private:
 	Classifier* classifier;
 	Detector* detector;
     DLmodule(std::string model_path);
+    cv::Mat cropped_result;
 	~DLmodule();
 };
 
