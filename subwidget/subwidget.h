@@ -42,9 +42,10 @@ private slots:
 
     void on_progressBar_valueChanged(int value);
 
+    void idSlot();
 signals:
     //使用： emit mySignal();
-    void mySignal();
+    void picSignal();
     void setSignal();
     void returnSignal();
 
