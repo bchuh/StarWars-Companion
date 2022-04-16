@@ -21,11 +21,6 @@ subwidget::subwidget(QWidget *parent, std::string db_path)
     //ui->Back->setAutoFillBackground(true);
     ui->Back->setFlat(true);
 
-    //设置模版
-    //QPalette palette = ui->centralwidget->palette();
-    //palette.setColor(QPalette::Window,Qt::red);
-    //ui->Previous->setPalette(palette);
-
     //逐个调整
     ui->frame_3->setStyleSheet("border:0px");
     ui->frame_2->setStyleSheet("border:0px");
@@ -93,21 +88,7 @@ void subwidget::setInfo(int ID,int Age,QString Name, QString Intro)
     ui->lineEdit_2->setText(P.Name);
     ui->lineEdit_3->setText(QString::number(P.Age));
     ui->textEdit->setText("     " + P.Intro);
-
-    update();
-    while(true)
-    {
-        connect(this,&subwidget::setSignal,this,&subwidget::on_Back_clicked);
-        for(int i = 1; i < 7; i ++)
-        {
-            //延时
-            QTime timer = QTime::currentTime().addMSecs(1000);
-               while( QTime::currentTime() < timer )
-                  QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
-               ui->progressBar->setValue(i);
-        }
-        emit mySignal();
-    }
+    idSlot();
 }
 
 
@@ -138,34 +119,7 @@ void subwidget::on_Back_clicked()
 {
     //返回上一级界面
     hide();
-
     emit returnSignal();
-/*
-    //演示 当上级跳转传入值 设置文本刷新界面
-    P.ID = 1;
-    P.Age = 2;
-    P.Intro = "3";
-    P.Name = "4";
-    ui->lineEdit->setText(QString::number(P.ID));
-    ui->lineEdit_2->setText(P.Name);
-    ui->lineEdit_3->setText(QString::number(P.Age));
-    ui->textEdit->setText("     " + P.Intro);
-    update();
-
-    while(true)
-    {
-        connect(this,&subwidget::setSignal,this,&subwidget::on_Back_clicked);
-        for(int i = 1; i < 7; i ++)
-        {
-            //延时
-            QEventLoop loop;
-                QTimer::singleShot(1000, &loop, SLOT(quit()));
-                loop.exec();
-               ui->progressBar->setValue(i);
-        }
-        emit mySignal();
-    }
-    */
 }
 
 
@@ -221,9 +175,28 @@ void subwidget::on_progressBar_valueChanged(int value)
 {
     if (value == 6)
     {
-        connect(this,&subwidget::mySignal,this,&subwidget::on_Next_clicked);
+        connect(this,&subwidget::picSignal,this,&subwidget::on_Next_clicked);
     }
 
+}
+
+void subwidget::idSlot()
+{
+
+    update();
+    while(true)
+    {
+        connect(this,&subwidget::setSignal,this,&subwidget::idSlot);
+        for(int i = 1; i < 7; i ++)
+        {
+            //延时
+               timer = QTime::currentTime().addMSecs(1000);
+               while( QTime::currentTime() < timer )
+                  QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+               ui->progressBar->setValue(i);
+        }
+        emit picSignal();
+    }
 }
 
 
