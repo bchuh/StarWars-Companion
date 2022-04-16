@@ -125,7 +125,8 @@ int DLmodule::classify(const cv::Mat& frame, int result_index)
 QImage DLmodule::getCroppedImage(const cv::Mat&frame, int result_index)
 {
     auto result = detector->output.at(result_index);
-    auto cropped_frame = frame(result.box);
+    auto frame_rect = cv::Rect(0, 0, frame.size().width, frame.size().height);
+    auto cropped_frame = frame(result.box & frame_rect);
     std::cout<<cropped_frame.cols<<','<<cropped_frame.rows<<std::endl;
     float old_ratio=cropped_frame.cols*1.0/(cropped_frame.rows);
     float new_ratio=1.65;

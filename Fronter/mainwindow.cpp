@@ -113,9 +113,10 @@ void MainWindow::on_pushButton_clicked()
         auto item = result.at(index);
         auto rect=item.box;
         cv::Point center_of_rect = (rect.br() + rect.tl())*0.5;
-        QString qstrStylesheet = "background-color:rgb(255,255,255);border-style: solid;max-width:20px;max-height:20px;min-width:20px;min-height:20px;border-radius:16px;";
+        QString qstrStylesheet = "QPushButton{background-color:rgb(255,255,255);border-style: solid;max-width:20px;max-height:20px;min-width:20px;min-height:20px;border-radius:16px;}";
+        QString hoverSylesheet = "QPushButton:hover{background-color:rgb(203,208,204);}";
         QPushButton * button=new QPushButton(ui->graphicsView);
-        button->setStyleSheet(qstrStylesheet);
+        button->setStyleSheet(qstrStylesheet+hoverSylesheet);
         button->setObjectName(QString::number(index));
         connect(button, SIGNAL(pressed()), this, SLOT(select()));
         ButtonList.prepend(button);
