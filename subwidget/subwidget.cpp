@@ -54,8 +54,6 @@ subwidget::subwidget(QWidget *parent, std::string db_path)
         exit(0);
     cout<<dbModule->nameQuery(2)<<endl;
 
-
-
 }
 
 void subwidget::setID(int id)
@@ -64,19 +62,30 @@ void subwidget::setID(int id)
    //cout<<dbModule->nameQuery(3);
    //this->setInfo(id, 0, "aa", "N/A");
 
-   char* temp_name=dbModule->nameQuery(id);
-   if(temp_name == nullptr){
+   char* temp_name = dbModule->nameQuery(id);
+   char* temp_info = dbModule->infoQuery(id);
+   if(temp_name == nullptr)
+   {
         cout<<"Error:nameQuery return NULL!"<<endl;
         return;
    }
-
-   string name=temp_name;
-   //cout<<dbModule->nameQuery(id);
-   this->setInfo(id, 0, QString::fromStdString(name), "N/A"); //目前只支持名字
+   else if(temp_info == nullptr)
+   {
+       cout<<"Error:infoQuery return NULL!"<<endl;
+       return;
+   }
+   else
+   {
+       string name = temp_name;
+       string info = temp_info;
+       //cout<<dbModule->nameQuery(id);
+       this->setInfo(id, 0, QString::fromStdString(name), QString::fromStdString(info));
+   }
 
 }
 void subwidget::setInfo(int ID,int Age,QString Name, QString Intro)
 {
+    idState = true;
     //SQL 查询返回结果
     //当上级跳转信号时设置
     //初始化人物
@@ -86,6 +95,7 @@ void subwidget::setInfo(int ID,int Age,QString Name, QString Intro)
     P.Name = Name;
     ui->lineEdit->setText(QString::number(P.ID));
     ui->lineEdit_2->setText(P.Name);
+    //没有年龄  不显示
     ui->lineEdit_3->setText(QString::number(P.Age));
     ui->textEdit->setText("     " + P.Intro);
     idSlot();
@@ -118,6 +128,7 @@ void subwidget::on_Next_clicked()
 void subwidget::on_Back_clicked()
 {
     //返回上一级界面
+    idState = false;
     hide();
     emit returnSignal();
 }
@@ -184,7 +195,7 @@ void subwidget::idSlot()
 {
 
     update();
-    while(true)
+    while(idState)
     {
         connect(this,&subwidget::setSignal,this,&subwidget::idSlot);
         for(int i = 1; i < 7; i ++)

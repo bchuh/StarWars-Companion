@@ -58,6 +58,8 @@ private:
     Ui::subwidget *ui;
     //图片的索引
     int ImageIndex;
+    bool idState = false;
+    QTime timer;
     QPushButton Back;
     QPushButton Previous;
     QPushButton Next;
