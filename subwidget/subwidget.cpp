@@ -27,10 +27,10 @@ subwidget::subwidget(QWidget *parent, std::string db_path)
     ui->frame->setStyleSheet("border:0px");
     ui->lineEdit->setStyleSheet("border:0px groove gray;border-radius:10px;padding:2px 4px;background-color: rgb(145, 145, 145);color:rgb(255,255,255);font: 13pt");
     ui->lineEdit_2->setStyleSheet("border:0px groove gray;border-radius:10px;padding:2px 4px;background-color: rgb(145, 145, 145);color:rgb(255,255,255);font: 13pt");
-    ui->lineEdit_3->setStyleSheet("border:0px groove gray;border-radius:10px;padding:2px 4px;background-color: rgb(145, 145, 145);color:rgb(255,255,255);font: 13pt");
+    //ui->lineEdit_3->setStyleSheet("border:0px groove gray;border-radius:10px;padding:2px 4px;background-color: rgb(145, 145, 145);color:rgb(255,255,255);font: 13pt");
     ui->label->setStyleSheet("color:rgb(255,255,255);font: 15pt");
     ui->label_2->setStyleSheet("color:rgb(255,255,255);font: 15pt");
-    ui->label_3->setStyleSheet("color:rgb(255,255,255);font: 15pt");
+    //ui->label_3->setStyleSheet("color:rgb(255,255,255);font: 15pt");
     ui->Previous->setStyleSheet("color:rgb(255,255,255);font: 15pt");
     ui->Back->setStyleSheet("color:rgb(255,255,255);font: 15pt");
     ui->Next->setStyleSheet("color:rgb(255,255,255);font: 15pt");
@@ -38,7 +38,7 @@ subwidget::subwidget(QWidget *parent, std::string db_path)
     ui->textEdit->setStyleSheet("color:rgb(255,255,255);font: 18pt");
     ui->lineEdit->setReadOnly(true);
     ui->lineEdit_2->setReadOnly(true);
-    ui->lineEdit_3->setReadOnly(true);
+    //ui->lineEdit_3->setReadOnly(true);
     ui->textEdit->setReadOnly(true);
     ui->progressBar->setMaximum(6);
     //设置图片起始
@@ -96,7 +96,7 @@ void subwidget::setInfo(int ID,int Age,QString Name, QString Intro)
     ui->lineEdit->setText(QString::number(P.ID));
     ui->lineEdit_2->setText(P.Name);
     //没有年龄  不显示
-    ui->lineEdit_3->setText(QString::number(P.Age));
+    //ui->lineEdit_3->setText(QString::number(P.Age));
     ui->textEdit->setText("     " + P.Intro);
     idSlot();
 }

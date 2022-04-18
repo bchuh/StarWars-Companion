@@ -118,7 +118,8 @@ int DLmodule::classify(const cv::Mat& frame, int result_index)
         return this->classifier->classify(frame);
     else{
         auto result = detector->output.at(result_index);
-        auto cropped_frame = frame(result.box);
+        auto frame_rect = cv::Rect(0, 0, frame.size().width, frame.size().height);
+        auto cropped_frame = frame(result.box & frame_rect);
         return this->classifier->classify(cropped_frame);
     }
 }
