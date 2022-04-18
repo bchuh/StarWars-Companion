@@ -82,6 +82,7 @@ void MainWindow::select()
     QString name=temp->objectName();
     index=name.toInt();std::cout<<"the index is "<<index<<std::endl<<"the person id is "<<result.at(index).class_id<<std::endl;
     int class_id = model->classify(frame, index);
+    std::cout<<"class id: "<<class_id<<std::endl;
     cropped_frame = model->getCroppedImage(frame, index);
     subWindow->cropped_frame = &cropped_frame;
     subWindow->show();
