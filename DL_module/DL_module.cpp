@@ -19,6 +19,9 @@ int Classifier::classify(cv::Mat inputFrame)
 	double confidence;
 	minMaxLoc(prob.reshape(1, 1), 0, &confidence, 0, &classIdPoint);
 	int classId = classIdPoint.x;
+    if (classId == 26){
+        classId = 33;//class 26 and 33 is the same
+    }
 	return classId;
 }
 
