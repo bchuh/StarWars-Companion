@@ -11,7 +11,7 @@ subwidget::subwidget(QWidget *parent, std::string db_path)
 {
     ui->setupUi(this);
 
-    setFixedSize(800,600);
+    setFixedSize(900,700);
     //设置按钮字体颜色
     //QPushButton *pushbutton = new QPushButton(this);
     //ui->Previous->setAutoFillBackground(true);
@@ -25,11 +25,11 @@ subwidget::subwidget(QWidget *parent, std::string db_path)
     ui->frame_3->setStyleSheet("border:0px");
     ui->frame_2->setStyleSheet("border:0px");
     ui->frame->setStyleSheet("border:0px");
-    ui->lineEdit->setStyleSheet("border:0px groove gray;border-radius:10px;padding:2px 4px;background-color: rgb(145, 145, 145);color:rgb(255,255,255);font: 13pt");
-    ui->lineEdit_2->setStyleSheet("border:0px groove gray;border-radius:10px;padding:2px 4px;background-color: rgb(145, 145, 145);color:rgb(255,255,255);font: 13pt");
+    ui->lineEdit->setStyleSheet("border:0px groove gray;border-radius:10px;padding:2px 4px;background-color: rgb(145, 145, 145);color:rgb(255,255,255);font: 18pt");
+    ui->lineEdit_2->setStyleSheet("border:0px groove gray;border-radius:10px;padding:2px 4px;background-color: rgb(145, 145, 145);color:rgb(255,255,255);font: 18pt");
     //ui->lineEdit_3->setStyleSheet("border:0px groove gray;border-radius:10px;padding:2px 4px;background-color: rgb(145, 145, 145);color:rgb(255,255,255);font: 13pt");
-    ui->label->setStyleSheet("color:rgb(255,255,255);font: 15pt");
-    ui->label_2->setStyleSheet("color:rgb(255,255,255);font: 15pt");
+    ui->label->setStyleSheet("color:rgb(255,255,255);font: 16pt");
+    ui->label_2->setStyleSheet("color:rgb(255,255,255);font: 16pt");
     //ui->label_3->setStyleSheet("color:rgb(255,255,255);font: 15pt");
     ui->Previous->setStyleSheet("color:rgb(255,255,255);font: 15pt");
     ui->Back->setStyleSheet("color:rgb(255,255,255);font: 15pt");
