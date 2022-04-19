@@ -20,7 +20,7 @@
    <widget class="QLineEdit" name="lineEdit_2">
     <property name="geometry">
      <rect>
-      <x>510</x>
+      <x>150</x>
       <y>320</y>
       <width>271</width>
       <height>31</height>
@@ -39,9 +39,9 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>450</x>
+      <x>70</x>
       <y>320</y>
-      <width>61</width>
+      <width>71</width>
       <height>31</height>
      </rect>
     </property>
@@ -49,13 +49,13 @@
      <enum>Qt::RightToLeft</enum>
     </property>
     <property name="text">
-     <string>Name</string>
+     <string>Name:</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>630</x>
       <y>320</y>
       <width>31</width>
       <height>31</height>
@@ -65,7 +65,7 @@
      <enum>Qt::RightToLeft</enum>
     </property>
     <property name="text">
-     <string>ID</string>
+     <string>ID:</string>
     </property>
    </widget>
    <widget class="QScrollArea" name="scrollArea_2">
@@ -105,7 +105,7 @@
    <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>680</x>
       <y>320</y>
       <width>91</width>
       <height>31</height>
@@ -231,7 +231,7 @@
      <x>0</x>
      <y>0</y>
      <width>900</width>
-     <height>24</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
