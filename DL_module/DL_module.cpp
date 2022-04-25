@@ -1,6 +1,6 @@
 #include "DL_module.h"
 
-using namespace std;
+//using namespace std;
 using namespace cv;
 Classifier* Classifier::instance = nullptr;
 DLmodule* DLmodule::instance = nullptr;
@@ -19,10 +19,13 @@ int Classifier::classify(cv::Mat inputFrame)
 	double confidence;
 	minMaxLoc(prob.reshape(1, 1), 0, &confidence, 0, &classIdPoint);
 	int classId = classIdPoint.x;
+    if (classId == 26){
+        classId = 33;//class 26 and 33 is the same
+    }
 	return classId;
 }
 
-Classifier* Classifier::getInstance(string onnx_path)
+Classifier* Classifier::getInstance(std::string onnx_path)
 {
 	if (Classifier::instance == nullptr)
 	{
@@ -42,15 +45,15 @@ void Classifier::Destroy()
 	Classifier::instance = nullptr;
 }
 
-Classifier::Classifier(string onnx_path)
+Classifier::Classifier(std::string onnx_path)
 {
 	String bin_model = onnx_path;
 	if (!fileExist(bin_model)) {
 		int temp;
 		this->_isReady = false;
-		cout << "DL_module Error: Can't open(or find) file:" << bin_model << endl;
+        std::cout << "DL_module Error: Can't open(or find) file:" << bin_model << std::endl;
 		//Can't read .onnx, please contact Zhu Zengliang if you encounter this.
-		cin >> temp;
+        std::cin >> temp;
 		return;
 	}
 	else {
@@ -65,7 +68,7 @@ Classifier::~Classifier()
 	this->_isReady = false;
 }
 
-bool Classifier::fileExist(string name)
+bool Classifier::fileExist(std::string name)
 {
 	if (FILE* file = fopen(name.c_str(), "r")) {
 		fclose(file);
@@ -103,7 +106,7 @@ void Classifier::preProcess(const cv::Mat& image, cv::Mat& image_blob)
 	outt.copyTo(image_blob);
 }
 
-DLmodule* DLmodule::getInstance(string model_path)
+DLmodule* DLmodule::getInstance(std::string model_path)
 {
 	if (DLmodule::instance == nullptr)
 	{
@@ -112,9 +115,41 @@ DLmodule* DLmodule::getInstance(string model_path)
 	return DLmodule::instance;
 }
 
-int DLmodule::classify(const cv::Mat& frame)
+int DLmodule::classify(const cv::Mat& frame, int result_index)
 {
-	return this->classifier->classify(frame);
+    if(result_index == -1) // 不进行目标裁剪
+        return this->classifier->classify(frame);
+    else{
+        auto result = detector->output.at(result_index);
+        auto frame_rect = cv::Rect(0, 0, frame.size().width, frame.size().height);
+        auto cropped_frame = frame(result.box & frame_rect);
+        return this->classifier->classify(cropped_frame);
+    }
+}
+QImage DLmodule::getCroppedImage(const cv::Mat&frame, int result_index)
+{
+    auto result = detector->output.at(result_index);
+    auto frame_rect = cv::Rect(0, 0, frame.size().width, frame.size().height);
+    auto cropped_frame = frame(result.box & frame_rect);
+    std::cout<<cropped_frame.cols<<','<<cropped_frame.rows<<std::endl;
+    float old_ratio=cropped_frame.cols*1.0/(cropped_frame.rows);
+    float new_ratio=1.65;
+    int total_boarder;
+    if (new_ratio>=old_ratio){
+        total_boarder = floor(cropped_frame.rows * new_ratio)-cropped_frame.cols;
+        cv::copyMakeBorder(cropped_frame, cropped_result, 0, 0, total_boarder/2, total_boarder/2, cv::BORDER_CONSTANT);
+    }else{
+        total_boarder = floor(cropped_frame.cols/new_ratio)-cropped_frame.rows;
+        cv::copyMakeBorder(cropped_frame, cropped_result,total_boarder/2, total_boarder/2 ,0 ,0 , cv::BORDER_CONSTANT);
+    }
+    std::cout<<cropped_frame.cols<<','<<cropped_frame.rows<<std::endl;
+    return QImage(cropped_result.data, cropped_result.cols, cropped_result.rows, cropped_result.step, QImage::Format_RGB888);
+
+}
+
+std::vector<Detection>& DLmodule::detect(cv::Mat frame)
+{
+	return this->detector->detect(frame);
 }
 
 void DLmodule::Destory()
@@ -128,14 +163,18 @@ bool DLmodule::isReady()
 	return classifier->isReady();
 }
 
-DLmodule::DLmodule(string model_path)
+DLmodule::DLmodule(std::string model_path)
 {
-	String path = model_path + "\\mobilenet.onnx";
-	this->classifier = Classifier::getInstance(path);
+	String classifier_path = model_path + "\\mobilenet.onnx";
+	String dete_path = model_path + "\\yolov5s.onnx";
+	this->classifier = Classifier::getInstance(classifier_path);
+	this->detector = Detector::getInstance(dete_path);
 }
 
 DLmodule::~DLmodule()
 {
 	Classifier::Destroy();
 	this->classifier = nullptr;
+	Detector::Destroy();
+	this->detector = nullptr;
 }

@@ -1,5 +1,5 @@
 
-#include <sqlite3.h>
+#include <../Database/sqlite3.h>
 #include <windows.h>
 #include <string>
 class SQLiteHelper
@@ -7,10 +7,9 @@ class SQLiteHelper
 public:
 	SQLiteHelper();
 	virtual ~SQLiteHelper();
-    sqlite3* db;    //Êı¾İ¿â±¾Éí
-	char* nameQuery(int ID);   //²éÑ¯nameº¯Êı
-	//char* infoQuery(int ID); //²éÑ¯infoº¯Êı
-	//char* picQuery(int ID);  //²éÑ¯pictureº¯Êı
-    bool openDB(char* path);   //´ò¿ªÊı¾İ¿â
-	void closeDB();            //¹Ø±ÕÊı¾İ¿â
+    sqlite3* db;    //æ•°æ®åº“æœ¬èº«
+	char* nameQuery(int ID);   //æŸ¥è¯¢nameå‡½æ•°
+	char* infoQuery(int ID); //æŸ¥è¯¢infoå‡½æ•°
+    bool openDB(char* path);   //æ‰“å¼€æ•°æ®åº“
+	void closeDB();            //å…³é—­æ•°æ®åº“
 };

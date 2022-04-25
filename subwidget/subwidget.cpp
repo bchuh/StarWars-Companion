@@ -5,13 +5,13 @@
 #include <iostream>
 
 using namespace std;
-subwidget::subwidget(QWidget *parent, string db_path)
+subwidget::subwidget(QWidget *parent, std::string db_path)
     : QMainWindow(parent)
     , ui(new Ui::subwidget)
 {
     ui->setupUi(this);
 
-    setFixedSize(800,600);
+    setFixedSize(900,700);
     //设置按钮字体颜色
     //QPushButton *pushbutton = new QPushButton(this);
     //ui->Previous->setAutoFillBackground(true);
@@ -21,21 +21,16 @@ subwidget::subwidget(QWidget *parent, string db_path)
     //ui->Back->setAutoFillBackground(true);
     ui->Back->setFlat(true);
 
-    //设置模版
-    //QPalette palette = ui->centralwidget->palette();
-    //palette.setColor(QPalette::Window,Qt::red);
-    //ui->Previous->setPalette(palette);
-
     //逐个调整
     ui->frame_3->setStyleSheet("border:0px");
     ui->frame_2->setStyleSheet("border:0px");
     ui->frame->setStyleSheet("border:0px");
-    ui->lineEdit->setStyleSheet("border:0px groove gray;border-radius:10px;padding:2px 4px;background-color: rgb(145, 145, 145);color:rgb(255,255,255);font: 13pt");
-    ui->lineEdit_2->setStyleSheet("border:0px groove gray;border-radius:10px;padding:2px 4px;background-color: rgb(145, 145, 145);color:rgb(255,255,255);font: 13pt");
-    ui->lineEdit_3->setStyleSheet("border:0px groove gray;border-radius:10px;padding:2px 4px;background-color: rgb(145, 145, 145);color:rgb(255,255,255);font: 13pt");
-    ui->label->setStyleSheet("color:rgb(255,255,255);font: 15pt");
-    ui->label_2->setStyleSheet("color:rgb(255,255,255);font: 15pt");
-    ui->label_3->setStyleSheet("color:rgb(255,255,255);font: 15pt");
+    ui->lineEdit->setStyleSheet("border:0px groove gray;border-radius:10px;padding:2px 4px;background-color: rgb(145, 145, 145);color:rgb(255,255,255);font: 18pt");
+    ui->lineEdit_2->setStyleSheet("border:0px groove gray;border-radius:10px;padding:2px 4px;background-color: rgb(145, 145, 145);color:rgb(255,255,255);font: 18pt");
+    //ui->lineEdit_3->setStyleSheet("border:0px groove gray;border-radius:10px;padding:2px 4px;background-color: rgb(145, 145, 145);color:rgb(255,255,255);font: 13pt");
+    ui->label->setStyleSheet("color:rgb(255,255,255);font: 16pt");
+    ui->label_2->setStyleSheet("color:rgb(255,255,255);font: 16pt");
+    //ui->label_3->setStyleSheet("color:rgb(255,255,255);font: 15pt");
     ui->Previous->setStyleSheet("color:rgb(255,255,255);font: 15pt");
     ui->Back->setStyleSheet("color:rgb(255,255,255);font: 15pt");
     ui->Next->setStyleSheet("color:rgb(255,255,255);font: 15pt");
@@ -43,7 +38,7 @@ subwidget::subwidget(QWidget *parent, string db_path)
     ui->textEdit->setStyleSheet("color:rgb(255,255,255);font: 18pt");
     ui->lineEdit->setReadOnly(true);
     ui->lineEdit_2->setReadOnly(true);
-    ui->lineEdit_3->setReadOnly(true);
+    //ui->lineEdit_3->setReadOnly(true);
     ui->textEdit->setReadOnly(true);
     ui->progressBar->setMaximum(6);
     //设置图片起始
@@ -59,8 +54,6 @@ subwidget::subwidget(QWidget *parent, string db_path)
         exit(0);
     cout<<dbModule->nameQuery(2)<<endl;
 
-
-
 }
 
 void subwidget::setID(int id)
@@ -69,19 +62,30 @@ void subwidget::setID(int id)
    //cout<<dbModule->nameQuery(3);
    //this->setInfo(id, 0, "aa", "N/A");
 
-   char* temp_name=dbModule->nameQuery(id);
-   if(temp_name == nullptr){
+   char* temp_name = dbModule->nameQuery(id);
+   char* temp_info = dbModule->infoQuery(id);
+   if(temp_name == nullptr)
+   {
         cout<<"Error:nameQuery return NULL!"<<endl;
         return;
    }
-
-   string name=temp_name;
-   //cout<<dbModule->nameQuery(id);
-   this->setInfo(id, 0, QString::fromStdString(name), "N/A"); //目前只支持名字
+   else if(temp_info == nullptr)
+   {
+       cout<<"Error:infoQuery return NULL!"<<endl;
+       return;
+   }
+   else
+   {
+       string name = temp_name;
+       string info = temp_info;
+       //cout<<dbModule->nameQuery(id);
+       this->setInfo(id, 0, QString::fromStdString(name), QString::fromStdString(info));
+   }
 
 }
 void subwidget::setInfo(int ID,int Age,QString Name, QString Intro)
 {
+    idState = true;
     //SQL 查询返回结果
     //当上级跳转信号时设置
     //初始化人物
@@ -91,23 +95,10 @@ void subwidget::setInfo(int ID,int Age,QString Name, QString Intro)
     P.Name = Name;
     ui->lineEdit->setText(QString::number(P.ID));
     ui->lineEdit_2->setText(P.Name);
-    ui->lineEdit_3->setText(QString::number(P.Age));
+    //没有年龄  不显示
+    //ui->lineEdit_3->setText(QString::number(P.Age));
     ui->textEdit->setText("     " + P.Intro);
-
-    update();
-    while(true)
-    {
-        connect(this,&subwidget::setSignal,this,&subwidget::on_Back_clicked);
-        for(int i = 1; i < 7; i ++)
-        {
-            //延时
-            QTime timer = QTime::currentTime().addMSecs(1000);
-               while( QTime::currentTime() < timer )
-                  QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
-               ui->progressBar->setValue(i);
-        }
-        emit mySignal();
-    }
+    idSlot();
 }
 
 
@@ -115,7 +106,7 @@ void subwidget::on_Previous_clicked()
 {
     if( --ImageIndex  < 1)
     {
-        ImageIndex = 4;
+        ImageIndex = 2;
     }
     emit setSignal();
     ui->progressBar->setValue(0);
@@ -124,7 +115,7 @@ void subwidget::on_Previous_clicked()
 
 void subwidget::on_Next_clicked()
 {
-    if( ++ ImageIndex > 4)
+    if( ++ ImageIndex > 2)
     {
         ImageIndex = 1;
     }
@@ -137,34 +128,9 @@ void subwidget::on_Next_clicked()
 void subwidget::on_Back_clicked()
 {
     //返回上一级界面
+    idState = false;
     hide();
-    emit mySignal();
-/*
-    //演示 当上级跳转传入值 设置文本刷新界面
-    P.ID = 1;
-    P.Age = 2;
-    P.Intro = "3";
-    P.Name = "4";
-    ui->lineEdit->setText(QString::number(P.ID));
-    ui->lineEdit_2->setText(P.Name);
-    ui->lineEdit_3->setText(QString::number(P.Age));
-    ui->textEdit->setText("     " + P.Intro);
-    update();
-
-    while(true)
-    {
-        connect(this,&subwidget::setSignal,this,&subwidget::on_Back_clicked);
-        for(int i = 1; i < 7; i ++)
-        {
-            //延时
-            QEventLoop loop;
-                QTimer::singleShot(1000, &loop, SLOT(quit()));
-                loop.exec();
-               ui->progressBar->setValue(i);
-        }
-        emit mySignal();
-    }
-    */
+    emit returnSignal();
 }
 
 
@@ -201,9 +167,12 @@ void subwidget::paintEvent(QPaintEvent *)
     QImage image1(":/" + QString::number(P.ID) + "/" + QString::number(ImageIndex) + ".jpg");
     QImage image2(":/" + QString::number(P.ID) + "/" + QString::number(ImageIndex + 1) + ".jpg");
     QImage image3(":/icon/icon.png");
-    painter.drawImage(rect1,image1);
-    painter.drawImage(rect2,image2);
-    painter.drawImage(rect3,image3);
+    if(cropped_frame!=nullptr){
+        painter.drawImage(rect1,*cropped_frame);
+        painter.drawImage(rect2,image1);
+        painter.drawImage(rect3,image3);
+    }
+
 }
 
 subwidget::~subwidget()
@@ -217,9 +186,28 @@ void subwidget::on_progressBar_valueChanged(int value)
 {
     if (value == 6)
     {
-        connect(this,&subwidget::mySignal,this,&subwidget::on_Next_clicked);
+        connect(this,&subwidget::picSignal,this,&subwidget::on_Next_clicked);
     }
 
+}
+
+void subwidget::idSlot()
+{
+
+    update();
+    while(idState)
+    {
+        connect(this,&subwidget::setSignal,this,&subwidget::idSlot);
+        for(int i = 1; i < 7; i ++)
+        {
+            //延时
+               timer = QTime::currentTime().addMSecs(1000);
+               while( QTime::currentTime() < timer )
+                  QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+               ui->progressBar->setValue(i);
+        }
+        emit picSignal();
+    }
 }
 
 

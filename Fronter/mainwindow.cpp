@@ -12,11 +12,8 @@ MainWindow::MainWindow(QWidget* parent)
 {
     ui->setupUi(this);
     stop = -1;
-    connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(on_pushButton_clicked()));
-    connect(ui->pushButton_2, SIGNAL(clicked(bool)), this, SLOT(on_pushButton_2_clicked()));
-    QGraphicsScene* m_scene;
     //画布
-    m_scene = new QGraphicsScene();
+    auto m_scene = new QGraphicsScene();
     this->m_imageItem = new QGraphicsPixmapItem();
     //场景增加画布
     m_scene->addItem(m_imageItem);
@@ -25,32 +22,34 @@ MainWindow::MainWindow(QWidget* parent)
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->show();
     this->cam = Camera::getInstance();
-    this->model = DLmodule::getInstance("C:\\Users\\zhuze\\Downloads\\StarWars-Companion-dev\\StarWars-Companion-dev\\DL_module");
+    this->model = DLmodule::getInstance("C:\\Users\\zhuze\\OneDrive - Macau University of Science and Technology\\Bill\\3th-2\\Software_proj_manage\\StarWars-Companion\\DL_module");
     this->subWindow=new subwidget(this, "C:\\Users\\zhuze\\OneDrive - Macau University of Science and Technology\\Bill\\3th-2\\Software_proj_manage\\StarWars-Companion\\Database\\star_war.db");
+    //this->model = DLmodule::getInstance("../StarWars-Companion\\DL_module");
+    //this->subWindow = new subwidget(this, "../StarWars-Companion\\Database\\star_war.db");
     subWindow->hide();
-    connect(subWindow, SIGNAL(mySignal()), this, SLOT(continue_run()));
+    connect(subWindow, SIGNAL(returnSignal()), this, SLOT(continue_run()));
+
 
 }
 void MainWindow::run() {
 
-    cv::Mat image;
+
     QTime dieTime;
     auto size = ui->graphicsView->size();
-    while (true)
+    while (isRunning)
     {
-        auto Rec=
-        image = cam->nextFrame(ui->graphicsView->width(), ui->graphicsView->height());
-        result = model->classify(image);
-        cv::resize(image, image, cv::Size(size.width(), size.height()));
-        std::cout << names[result] << endl;//数据库链接更改
+        frame = cam->nextFrame(ui->graphicsView->width(), ui->graphicsView->height());
+        //result = model->classify(frame); 测试是否不需要
+        cv::resize(frame, frame, cv::Size(size.width(), size.height()));
+       // std::cout << names[result] << endl;//数据库链接更改
         //场景
         size = ui->graphicsView->size();
         //控件绑定场景
 
         //记录绘制图片
-        //m_imageShow = image.clone();
-        cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
-        QImage  img2(image.data, image.cols, image.rows, image.step, QImage::Format_RGB888);
+        //m_frameShow = frame.clone();
+        cv::cvtColor(frame, frame, cv::COLOR_BGR2RGB);
+        QImage  img2(frame.data, frame.cols, frame.rows, frame.step, QImage::Format_RGB888);
         //m_imageItem->setPixmap(QPixmap::fromImage(QImage((const unsigned char*)image.data, image.cols, image.rows, QImage::Format::Format_RGB888)));
         m_imageItem->setPixmap(QPixmap::fromImage(img2));
         dieTime = QTime::currentTime().addMSecs(20);
@@ -75,6 +74,22 @@ MainWindow::~MainWindow()
     this->model->Destory();
     delete ui;
 }
+void MainWindow::select()
+{
+    int index=0;
+    cout<<"clicked"<<endl;
+    QPushButton* temp=(QPushButton*)sender();
+    QString name=temp->objectName();
+    index=name.toInt();std::cout<<"the index is "<<index<<std::endl<<"the person id is "<<result.at(index).class_id<<std::endl;
+    int class_id = model->classify(frame, index);
+    std::cout<<"class id: "<<class_id<<std::endl;
+    cropped_frame = model->getCroppedImage(frame, index);
+    subWindow->cropped_frame = &cropped_frame;
+    subWindow->show();
+    subWindow->setID(class_id);
+    continue_run();
+
+}
 
 void MainWindow::on_pushButton_2_clicked()
 {
@@ -83,14 +98,44 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_pushButton_clicked()
 {
-    cout<<"clicked"<<endl;
-    cout<<result<<endl;
-    subWindow->show();
-    subWindow->setID(this->result);
-    run();
+    int number,index;
+    result = model->detect(frame);
+    isRunning=false;
+    number=result.size();
+    //cout<<"total detected number is "<<result.size()<<endl;
+    if(0==number)
+    {
+        cout<<"no result"<<endl;
+        continue_run();
+    }
+    else for(index=number-1;index>=0;index--)
+    {
+        //cout<<index<<endl;
+        auto item = result.at(index);
+        auto rect=item.box;
+        cv::Point center_of_rect = (rect.br() + rect.tl())*0.5;
+        QString qstrStylesheet = "QPushButton{background-color:rgb(255,255,255);border-style: solid;max-width:20px;max-height:20px;min-width:20px;min-height:20px;border-radius:16px;}";
+        QString hoverSylesheet = "QPushButton:hover{background-color:rgb(203,208,204);}";
+        QPushButton * button=new QPushButton(ui->graphicsView);
+        button->setStyleSheet(qstrStylesheet+hoverSylesheet);
+        button->setObjectName(QString::number(index));
+        connect(button, SIGNAL(pressed()), this, SLOT(select()));
+        ButtonList.prepend(button);
+        button->move(center_of_rect.x, center_of_rect.y);
+        button->show();
+        update();
+    }
+
+
+
 
 }
 
+
 void MainWindow::continue_run(){
+    std::cout<<"continue"<<std::endl;
+    qDeleteAll(ButtonList.begin(),ButtonList.end());
+    ButtonList.clear();
+    isRunning=true;
     run();
 }

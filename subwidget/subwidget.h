@@ -13,16 +13,17 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class subwidget; }
 QT_END_NAMESPACE
 
-using namespace std;
+//using namespace std;
 
 class subwidget : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    subwidget(QWidget *parent = nullptr, string db_path = nullptr);
+    subwidget(QWidget *parent = nullptr, std::string db_path = nullptr);
     ~subwidget();
     void setID(int id);
+    QImage *cropped_frame;
     //角色信息
     struct Character
     {
@@ -41,10 +42,12 @@ private slots:
 
     void on_progressBar_valueChanged(int value);
 
+    void idSlot();
 signals:
     //使用： emit mySignal();
-    void mySignal();
+    void picSignal();
     void setSignal();
+    void returnSignal();
 
 private:
     Character P;
@@ -55,8 +58,11 @@ private:
     Ui::subwidget *ui;
     //图片的索引
     int ImageIndex;
+    bool idState = false;
+    QTime timer;
     QPushButton Back;
     QPushButton Previous;
     QPushButton Next;
+
     SQLiteHelper*dbModule;
 };

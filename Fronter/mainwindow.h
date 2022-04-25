@@ -8,6 +8,7 @@
 #include <string>
 #include <opencv2\opencv.hpp>
 #include <opencv2/imgproc.hpp>
+#include "../DL_module/detector.h"
 #include "../subwidget/subwidget.h"
 #include "../Camera_module/camera_module.h"
 #include "../DL_module/DL_module.h"
@@ -30,10 +31,12 @@ public:
     MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
     void run();
+    QImage cropped_frame;
 
 private slots:
     void on_pushButton_clicked();
     void on_pushButton_2_clicked();
+    void select();
     void continue_run();
 private:
     Ui::MainWindow* ui;
@@ -41,8 +44,11 @@ private:
     Camera* cam;
     DLmodule* model;
     subwidget*subWindow;
-    int result;
+    QList<QPushButton*> ButtonList;
+    std::vector<Detection> result;
     int stop;
+    bool isRunning=true;
+    cv::Mat frame;
 };
 
 
