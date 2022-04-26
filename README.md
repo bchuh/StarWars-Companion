@@ -2,7 +2,7 @@
 A computer vision project that detect, classify Star Wars characters and show their info.
 + This is a group project of course *Software Project Management* @ Macau University of Science and Technology
 -----------
-## This is the sprint 1 of development
+## This is the sprint 3 of development
 + ### To all group members: Please prevent editing files uploaded by other team members!! 
 + #### 所有组员： 请不要修改其他组员上传的文件，因为这会导致他人<code>git pull</code>冲突
 + ### To all group members: Files of different modules should be put in different folders.
