@@ -105,7 +105,8 @@ void MainWindow::on_pushButton_clicked()
     if(0==number)
     {
         cout<<"no result"<<endl;
-        continue_run();
+        isRunning = true;
+        run();
     }
     else for(index=number-1;index>=0;index--)
     {

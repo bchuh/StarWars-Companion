@@ -52,7 +52,7 @@ subwidget::subwidget(QWidget *parent, std::string db_path)
     auto temp=dbModule->openDB(const_cast<char*>(path));
     if(temp==false)
         exit(0);
-    cout<<dbModule->nameQuery(2)<<endl;
+    //cout<<dbModule->nameQuery(2)<<endl;
 
 }
 
@@ -98,6 +98,7 @@ void subwidget::setInfo(int ID,int Age,QString Name, QString Intro)
     //没有年龄  不显示
     //ui->lineEdit_3->setText(QString::number(P.Age));
     ui->textEdit->setText("     " + P.Intro);
+    //paintEvent(nullptr);
     idSlot();
 }
 
@@ -106,7 +107,7 @@ void subwidget::on_Previous_clicked()
 {
     if( --ImageIndex  < 1)
     {
-        ImageIndex = 2;
+        ImageIndex = 3;
     }
     emit setSignal();
     ui->progressBar->setValue(0);
@@ -115,7 +116,7 @@ void subwidget::on_Previous_clicked()
 
 void subwidget::on_Next_clicked()
 {
-    if( ++ ImageIndex > 2)
+    if( ++ ImageIndex > 3)
     {
         ImageIndex = 1;
     }
@@ -164,9 +165,9 @@ void subwidget::paintEvent(QPaintEvent *)
     //构建图形
     //获得路径
     //P.ID = 1;
-    QImage image1(":/" + QString::number(P.ID) + "/" + QString::number(ImageIndex) + ".jpg");
-    QImage image2(":/" + QString::number(P.ID) + "/" + QString::number(ImageIndex + 1) + ".jpg");
-    QImage image3(":/icon/icon.png");
+    QImage image1("../StarWars-Companion/Fronter/image/" + QString::number(P.ID) + "/" + QString::number(ImageIndex) + ".jpg");
+    QImage image2("../StarWars-Companion/Fronter/image/" + QString::number(P.ID) + "/" + QString::number(ImageIndex + 1) + ".jpg");
+    QImage image3("../StarWars-Companion/Fronter/image/icon.png");
     if(cropped_frame!=nullptr){
         painter.drawImage(rect1,*cropped_frame);
         painter.drawImage(rect2,image1);
