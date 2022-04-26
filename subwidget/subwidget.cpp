@@ -129,7 +129,7 @@ void subwidget::on_Back_clicked()
 {
     //返回上一级界面
     idState = false;
-    hide();
+    //hide();
     emit returnSignal();
 }
 

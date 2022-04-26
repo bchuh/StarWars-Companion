@@ -22,12 +22,10 @@ MainWindow::MainWindow(QWidget* parent)
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->show();
     this->cam = Camera::getInstance();
-    this->model = DLmodule::getInstance("C:\\Users\\zhuze\\OneDrive - Macau University of Science and Technology\\Bill\\3th-2\\Software_proj_manage\\StarWars-Companion\\DL_module");
-    this->subWindow=new subwidget(this, "C:\\Users\\zhuze\\OneDrive - Macau University of Science and Technology\\Bill\\3th-2\\Software_proj_manage\\StarWars-Companion\\Database\\star_war.db");
-    //this->model = DLmodule::getInstance("../StarWars-Companion\\DL_module");
-    //this->subWindow = new subwidget(this, "../StarWars-Companion\\Database\\star_war.db");
-    subWindow->hide();
-    connect(subWindow, SIGNAL(returnSignal()), this, SLOT(continue_run()));
+    //this->model = DLmodule::getInstance("C:\\Users\\zhuze\\OneDrive - Macau University of Science and Technology\\Bill\\3th-2\\Software_proj_manage\\StarWars-Companion\\DL_module");
+    //this->subWindow=new subwidget(this, "C:\\Users\\zhuze\\OneDrive - Macau University of Science and Technology\\Bill\\3th-2\\Software_proj_manage\\StarWars-Companion\\Database\\star_war.db");
+    this->model = DLmodule::getInstance("../StarWars-Companion\\DL_module");
+    this->subWindow = new subwidget(this, "../StarWars-Companion\\Database\\star_war.db");
 
 
 }
@@ -85,7 +83,8 @@ void MainWindow::select()
     std::cout<<"class id: "<<class_id<<std::endl;
     cropped_frame = model->getCroppedImage(frame, index);
     subWindow->cropped_frame = &cropped_frame;
-    subWindow->show();
+    emit subwindowshow();
+    //subWindow->show();
     subWindow->setID(class_id);
     continue_run();
 
@@ -139,3 +138,9 @@ void MainWindow::continue_run(){
     isRunning=true;
     run();
 }
+
+subwidget* MainWindow::getmsubwindow()
+{
+    return this->subWindow;
+}
+

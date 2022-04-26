@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QGraphicsItem>
+#include <QStackedLayout>
 #include <vector>
 #include <string>
 #include <opencv2\opencv.hpp>
@@ -29,15 +30,19 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget* parent = nullptr);
+    subwidget* getmsubwindow();
     ~MainWindow();
     void run();
+    void continue_run();
     QImage cropped_frame;
 
 private slots:
     void on_pushButton_clicked();
     void on_pushButton_2_clicked();
     void select();
-    void continue_run();
+
+signals:
+    void subwindowshow();
 private:
     Ui::MainWindow* ui;
     QGraphicsPixmapItem* m_imageItem;

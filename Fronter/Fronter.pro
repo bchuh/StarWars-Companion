@@ -14,6 +14,7 @@ SOURCES += \
     ../DL_module/detector.cpp \
     ../Database/SQLiteHelper.cpp \
     ../subwidget/subwidget.cpp \
+    frame/form.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -25,10 +26,12 @@ HEADERS += \
     ../Database/sqlite3.h \
     ../Database/sqlite3ext.h \
     ../subwidget/subwidget.h \
+    frame/form.h \
     mainwindow.h
 
 FORMS += \
     ../subwidget/subwidget.ui \
+    frame/form.ui \
     mainwindow.ui
 
 
@@ -39,7 +42,7 @@ INCLUDEPATH += D:/opencv/build/include \
 
 LIBS += D:/opencv/build/x64/vc15/lib/opencv_world454.lib  \
         D:/opencv/build/x64/vc15/lib/opencv_world454d.lib  \
-        D:/StarWars-Companion-dev/Database/sqlite.lib
+        C:\Users\YRY\source\repos\StarWars-Companion/Database/sqlite.lib
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
