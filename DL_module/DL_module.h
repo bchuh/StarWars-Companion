@@ -10,7 +10,7 @@
 class Classifier
 {
 public:
-	int classify(cv::Mat frame);
+    void classify(cv::Mat frame, int* array);
     static Classifier* getInstance(std::string onnx_path);
 	bool isReady();
 	static void Destroy();
@@ -31,7 +31,7 @@ class DLmodule
 {
 public:
     static DLmodule* getInstance(std::string model_path);
-    int classify(const cv::Mat& frame, int result_index = -1);
+    void classify(const cv::Mat& frame, int* results, int result_index = -1);
     QImage getCroppedImage(const cv::Mat&frame, int result_index);
     std::vector<Detection>& detect(cv::Mat frame);
     QImage image;

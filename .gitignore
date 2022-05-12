@@ -373,3 +373,4 @@ MigrationBackup/
 /Fronter/msvc_make.bat
 /Database/sqlite3.lib
 /Fronter/Fronter.pro.user.4b14396
+/Camera_module/PropertySheet.props

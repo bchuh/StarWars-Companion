@@ -22,10 +22,10 @@ MainWindow::MainWindow(QWidget* parent)
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->show();
     this->cam = Camera::getInstance();
-    //this->model = DLmodule::getInstance("C:\\Users\\zhuze\\OneDrive - Macau University of Science and Technology\\Bill\\3th-2\\Software_proj_manage\\StarWars-Companion\\DL_module");
-    //this->subWindow=new subwidget(this, "C:\\Users\\zhuze\\OneDrive - Macau University of Science and Technology\\Bill\\3th-2\\Software_proj_manage\\StarWars-Companion\\Database\\star_war.db");
-    this->model = DLmodule::getInstance("../StarWars-Companion\\DL_module");
-    this->subWindow = new subwidget(this, "../StarWars-Companion\\Database\\star_war.db");
+    this->model = DLmodule::getInstance("C:\\Users\\zhuze\\OneDrive - Macau University of Science and Technology\\Bill\\3th-2\\Software_proj_manage\\StarWars-Companion\\DL_module");
+    this->subWindow=new subwidget(this, "C:\\Users\\zhuze\\OneDrive - Macau University of Science and Technology\\Bill\\3th-2\\Software_proj_manage\\StarWars-Companion\\Database\\star_war.db");
+    //this->model = DLmodule::getInstance("../StarWars-Companion\\DL_module");
+    //this->subWindow = new subwidget(this, "../StarWars-Companion\\Database\\star_war.db");
 
 
 }
@@ -79,13 +79,15 @@ void MainWindow::select()
     QPushButton* temp=(QPushButton*)sender();
     QString name=temp->objectName();
     index=name.toInt();std::cout<<"the index is "<<index<<std::endl<<"the person id is "<<result.at(index).class_id<<std::endl;
-    int class_id = model->classify(frame, index);
-    std::cout<<"class id: "<<class_id<<std::endl;
+    int results[3];
+    model->classify(frame, results, index);
+    for (int item: results)
+        std::cout<<"class name: "<<names[item]<<std::endl;
     cropped_frame = model->getCroppedImage(frame, index);
     subWindow->cropped_frame = &cropped_frame;
     emit subwindowshow();
     //subWindow->show();
-    subWindow->setID(class_id);
+    subWindow->setID(results[0]);
     continue_run();
 
 }
