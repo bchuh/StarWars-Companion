@@ -22,7 +22,8 @@ class subwidget : public QMainWindow
 public:
     subwidget(QWidget *parent = nullptr, std::string db_path = nullptr);
     ~subwidget();
-    void setID(int id);
+    void setID(int id[]);
+    void selectCharacter(int num);
     QImage *cropped_frame;
     //角色信息
     struct Character
@@ -32,6 +33,7 @@ public:
         QString Name;
         QString Intro;
     };
+    int idArr[3];
 private slots:
 
     void on_Previous_clicked();
@@ -43,6 +45,12 @@ private slots:
     void on_progressBar_valueChanged(int value);
 
     void idSlot();
+    void on_Character3_clicked();
+
+    void on_Character1_clicked();
+
+    void on_Character2_clicked();
+
 signals:
     //使用： emit mySignal();
     void picSignal();

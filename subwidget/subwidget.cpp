@@ -11,7 +11,7 @@ subwidget::subwidget(QWidget *parent, std::string db_path)
 {
     ui->setupUi(this);
 
-    setFixedSize(900,700);
+    //setFixedSize(900,700);
     //设置按钮字体颜色
     //QPushButton *pushbutton = new QPushButton(this);
     //ui->Previous->setAutoFillBackground(true);
@@ -44,10 +44,7 @@ subwidget::subwidget(QWidget *parent, std::string db_path)
     //设置图片起始
     ImageIndex = 1;
     //init db
-
-
     dbModule=(SQLiteHelper*)new SQLiteHelper();
-
     const char* path=db_path.c_str();
     auto temp=dbModule->openDB(const_cast<char*>(path));
     if(temp==false)
@@ -56,33 +53,53 @@ subwidget::subwidget(QWidget *parent, std::string db_path)
 
 }
 
-void subwidget::setID(int id)
+void subwidget::setID(int id[])
 {
    cout<<"subwidget:"<<endl;
    //cout<<dbModule->nameQuery(3);
    //this->setInfo(id, 0, "aa", "N/A");
+   //遍历数组 设置按钮图片
+   QString imagePath1 = "../StarWars-Companion/Fronter/image/" + QString::number(id[0]) + "/1.jpg";
+   QString imagePath2 = "../StarWars-Companion/Fronter/image/" + QString::number(id[1]) + "/1.jpg";
+   QString imagePath3 = "../StarWars-Companion/Fronter/image/" + QString::number(id[2]) + "/1.jpg";
+   //不知道怎么写
+   ui->Character1->setStyleSheet("QPushButton{border-image: url(\"C:/Users/YRY/Desktop/SarWar/SarWar/Fronter/image/" + QString::number(id[0]) + "/1.jpg\"); color: white} QPushButton:hover{border: 10px double rgb(0, 0, 0);}");
+   ui->Character2->setStyleSheet("QPushButton{border-image: url(\"C:/Users/YRY/Desktop/SarWar/SarWar/Fronter/image/" + QString::number(id[1]) + "/1.jpg\"); color: white} QPushButton:hover{border: 10px double rgb(0, 0, 0);}");
+   ui->Character3->setStyleSheet("QPushButton{border-image: url(\"C:/Users/YRY/Desktop/SarWar/SarWar/Fronter/image/" + QString::number(id[2]) + "/1.jpg\"); color: white} QPushButton:hover{border: 10px double rgb(0, 0, 0);}");
 
-   char* temp_name = dbModule->nameQuery(id);
-   char* temp_info = dbModule->infoQuery(id);
-   if(temp_name == nullptr)
-   {
-        cout<<"Error:nameQuery return NULL!"<<endl;
-        return;
-   }
-   else if(temp_info == nullptr)
-   {
-       cout<<"Error:infoQuery return NULL!"<<endl;
-       return;
-   }
-   else
-   {
-       string name = temp_name;
-       string info = temp_info;
-       //cout<<dbModule->nameQuery(id);
-       this->setInfo(id, 0, QString::fromStdString(name), QString::fromStdString(info));
-   }
+   ui->Character1->setFixedSize(QSize(200, 200));
+   ui->Character2->setFixedSize(QSize(200, 200));
+   ui->Character3->setFixedSize(QSize(200, 200));
+   for(int i = 0;i < 3;i++)
+           idArr[i] = id[i];
+   selectCharacter(0);
 
 }
+
+void subwidget::selectCharacter(int num)
+{
+    char* temp_name = dbModule->nameQuery(idArr[num]);
+    char* temp_info = dbModule->infoQuery(idArr[num]);
+    if(temp_name == nullptr)
+    {
+         cout<<"Error:nameQuery return NULL!"<<endl;
+         return;
+    }
+    else if(temp_info == nullptr)
+    {
+        cout<<"Error:infoQuery return NULL!"<<endl;
+        return;
+    }
+    else
+    {
+        string name = temp_name;
+        string info = temp_info;
+        //cout<<dbModule->nameQuery(id);
+        this->setInfo(idArr[num], 0, QString::fromStdString(name), QString::fromStdString(info));
+    }
+}
+
+
 void subwidget::setInfo(int ID,int Age,QString Name, QString Intro)
 {
     idState = true;
@@ -211,4 +228,15 @@ void subwidget::idSlot()
     }
 }
 
-
+void subwidget::on_Character1_clicked()
+{
+    selectCharacter(0);
+}
+void subwidget::on_Character2_clicked()
+{
+    selectCharacter(1);
+}
+void subwidget::on_Character3_clicked()
+{
+    selectCharacter(2);
+}
