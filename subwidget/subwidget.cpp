@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QString>
 #include <iostream>
+#define DIR "C:/Users/YRY/Desktop/SarWar/SarWar/Fronter/image/"
 
 using namespace std;
 subwidget::subwidget(QWidget *parent, std::string db_path)
@@ -59,17 +60,18 @@ void subwidget::setID(int id[])
    //cout<<dbModule->nameQuery(3);
    //this->setInfo(id, 0, "aa", "N/A");
    //遍历数组 设置按钮图片
-   QString imagePath1 = "../StarWars-Companion/Fronter/image/" + QString::number(id[0]) + "/1.jpg";
-   QString imagePath2 = "../StarWars-Companion/Fronter/image/" + QString::number(id[1]) + "/1.jpg";
-   QString imagePath3 = "../StarWars-Companion/Fronter/image/" + QString::number(id[2]) + "/1.jpg";
+   QString dir = DIR;
+   QString imagePath1 = dir + QString::number(id[0]) + "/1.jpg";
+   QString imagePath2 = dir + QString::number(id[1]) + "/1.jpg";
+   QString imagePath3 = dir + QString::number(id[2]) + "/1.jpg";
    //不知道怎么写
-   ui->Character1->setStyleSheet("QPushButton{border-image: url(\"C:/Users/YRY/Desktop/SarWar/SarWar/Fronter/image/" + QString::number(id[0]) + "/1.jpg\"); color: white} QPushButton:hover{border: 10px double rgb(0, 0, 0);}");
-   ui->Character2->setStyleSheet("QPushButton{border-image: url(\"C:/Users/YRY/Desktop/SarWar/SarWar/Fronter/image/" + QString::number(id[1]) + "/1.jpg\"); color: white} QPushButton:hover{border: 10px double rgb(0, 0, 0);}");
-   ui->Character3->setStyleSheet("QPushButton{border-image: url(\"C:/Users/YRY/Desktop/SarWar/SarWar/Fronter/image/" + QString::number(id[2]) + "/1.jpg\"); color: white} QPushButton:hover{border: 10px double rgb(0, 0, 0);}");
+   ui->Character1->setStyleSheet("QPushButton{border-image: url(\"" + dir + QString::number(id[0]) + "/1.jpg\") ;color: white;border-radius:16px;} QPushButton:hover{border: 10px double rgb(0, 0, 0)};border-radius:16px;");
+   ui->Character2->setStyleSheet("QPushButton{border-image: url(\"" + dir + QString::number(id[1]) + "/1.jpg\") ;color: white;border-radius:16px;} QPushButton:hover{border: 10px double rgb(0, 0, 0)};border-radius:16px;");
+   ui->Character3->setStyleSheet("QPushButton{border-image: url(\"" + dir + QString::number(id[2]) + "/1.jpg\") ;color: white;border-radius:16px;} QPushButton:hover{border: 10px double rgb(0, 0, 0)};border-radius:16px;");
 
-   ui->Character1->setFixedSize(QSize(200, 200));
-   ui->Character2->setFixedSize(QSize(200, 200));
-   ui->Character3->setFixedSize(QSize(200, 200));
+   ui->Character1->setFixedSize(QSize(150, 150));
+   ui->Character2->setFixedSize(QSize(150, 150));
+   ui->Character3->setFixedSize(QSize(150, 150));
    for(int i = 0;i < 3;i++)
            idArr[i] = id[i];
    selectCharacter(0);
@@ -169,7 +171,9 @@ void subwidget::paintEvent(QPaintEvent *)
 
     //获取绘图区
     QRect rect1 = ui->frame->frameRect();
+    rect1.setWidth(rect1.height()*1.5);
     QRect rect2 = ui->frame_2->frameRect();
+    rect2.setWidth(rect2.height()*1.5);
     QRect rect3 = ui->frame_3->frameRect();
     //qDebug()<<"1"<<rect1;
 
@@ -182,9 +186,9 @@ void subwidget::paintEvent(QPaintEvent *)
     //构建图形
     //获得路径
     //P.ID = 1;
-    QImage image1("../StarWars-Companion/Fronter/image/" + QString::number(P.ID) + "/" + QString::number(ImageIndex) + ".jpg");
-    QImage image2("../StarWars-Companion/Fronter/image/" + QString::number(P.ID) + "/" + QString::number(ImageIndex + 1) + ".jpg");
-    QImage image3("../StarWars-Companion/Fronter/image/icon.png");
+    QImage image1(DIR + QString::number(P.ID) + "/" + QString::number(ImageIndex) + ".jpg");
+    QImage image2(DIR + QString::number(P.ID) + "/" + QString::number(ImageIndex + 1) + ".jpg");
+    QImage image3(DIR + QString("icon.png"));
     if(cropped_frame!=nullptr){
         painter.drawImage(rect1,*cropped_frame);
         painter.drawImage(rect2,image1);

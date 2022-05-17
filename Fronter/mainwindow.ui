@@ -24,7 +24,8 @@
     <item>
      <widget class="QPushButton" name="pushButton_2">
       <property name="styleSheet">
-       <string notr="true">color: rgb(255, 255, 255);
+       <string notr="true">
+color: rgb(255, 255, 255);
 border:2px groove black;border-radius:10px;padding:4px 6px;background-color: rgb(145, 145, 145);border-color: rgb(255, 203, 0);</string>
       </property>
       <property name="text">
@@ -68,6 +69,7 @@ border-color: rgb(255, 203, 0);</string>
         <property name="font">
          <font>
           <pointsize>17</pointsize>
+          <weight>75</weight>
           <bold>true</bold>
          </font>
         </property>
@@ -90,7 +92,7 @@ border:2px groove black;border-radius:10px;padding:4px 6px;background-color: rgb
      <x>0</x>
      <y>0</y>
      <width>902</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
