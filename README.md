@@ -1,6 +1,7 @@
 # StarWars-Companion
 A computer vision project that detect, classify Star Wars characters and show their info.
 + This is a group project of course *Software Project Management* @ Macau University of Science and Technology
++ Project poster : [Click here](https://github.com/bchuh/StarWars-Companion/blob/main/Poster.pdf)
 -----------
 + #### Porject structure： 
 ```
